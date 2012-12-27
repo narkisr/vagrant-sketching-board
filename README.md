@@ -1,13 +1,24 @@
 Intro
 =======================
 
-A talk about using Vagrant in operations development tasks
+We have our compilers, editors and build tools for developing our software, yet up till now we were left with a limited set of options when we approached our infrastructure development tasks. 
+It would be great to have reproducibility, fast iterations and testability in our infra environments, tools like Vagrant, 
+Puppet, FPM and Librarian Puppet help us reach these goals.
 
 
-Mind map
-========
+Story line
+==========
 
-
-Tips:
-
- * Use good hardware,16GB i7 and ssd is dirt chip (-> 3500nis)
+ * The notion of sandboxing, why it will help you to develop faster.
+ * Introducing Vagrant:
+   * Vagrant boxes.
+   * Puppet integration and short intro on Puppet.
+   * Multiple sandboxes and wiring.
+   * Dependency management using Puppet librarian puppet and bundler.
+   * Showcasing different use cases:
+     * Automatic development environment setup puppet-base-env.
+     * Distributed Storm cluster sandbox storm-sandbox.
+     * Using Vagrant and for FPM packaging testbed graylog2-sandbox.
+  Tricks&Tips:
+   
+  * Use good hardware,16GB i7 and ssd is dirt chip (-> 3500nis)
