@@ -11,11 +11,12 @@ Story line
 
  * The notion of sandboxing, why it will help you to develop faster.
  * Introducing Vagrant:
+   * Virtualbox integration.
    * Vagrant boxes.
-   * Puppet integration and short intro on Puppet.
-   * Multiple sandboxes and wiring.
+   * Provioning integration and short intro on Puppet.
+   * Distributed networking using sandboxes.
    * Dependency management using Puppet librarian puppet and bundler.
-   * Showcasing different use cases:
+ * Showcasing different use cases:
      * Automatic development environment setup puppet-base-env.
      * Distributed Storm cluster sandbox storm-sandbox.
      * Using Vagrant and for FPM packaging testbed graylog2-sandbox.
