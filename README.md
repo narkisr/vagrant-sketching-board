@@ -16,10 +16,15 @@ Story line
    * Provioning integration and short intro on Puppet.
    * Distributed networking using sandboxes.
    * Dependency management using Puppet librarian puppet and bundler.
+   * 
+ * Pupppet librarian:
+   * Really increases quality (depedency managment, using standart forge module)
+   * Enables quick testing of external modules
  * Showcasing different use cases:
      * Automatic development environment setup puppet-base-env.
      * Distributed Storm cluster sandbox storm-sandbox.
      * Using Vagrant and for FPM packaging testbed graylog2-sandbox.
+     * 
   Tricks&Tips:
    
-  * Use good hardware,16GB i7 and ssd is dirt chip (-> 3500nis)
+  * Use good hardware,16GB i7 and ssd is dirt chip (-> 4k nis)
