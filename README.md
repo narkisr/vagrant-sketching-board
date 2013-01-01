@@ -16,7 +16,7 @@ Story line
    * Provioning integration and short intro on Puppet.
    * Distributed networking using sandboxes.
    * Dependency management using Puppet librarian puppet and bundler.
-   * 
+ * Creating your own boxes using Veewee
  * Pupppet librarian:
    * Really increases quality (depedency managment, using standart forge module)
    * Enables quick testing of external modules
