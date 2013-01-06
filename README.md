@@ -10,13 +10,17 @@ Story line
 ==========
 
  * The notion of sandboxing, why it will help you to develop faster.
- * Vagrant is lowest common denominator, by using it we isolate the ops development process from the dest platform (EC2, Openstack etc..)
+ 
+ *
  * Vagrant:
    * Virtualbox integration.
    * Vagrant boxes.
    * Provioning integration and short intro on Puppet.
    * Distributed networking using sandboxes.
    * Dependency management using Puppet librarian puppet and bundler.
+ * Vagrant benefits:
+   * Vagrant is lowest common denominator, by using it we isolate the ops development process from the dest platform (EC2, Openstack etc..)
+   * Vagrant has (almost) close to zero price on integration cost (no new hardware or new expenses). 
  * Creating your own boxes using Veewee
  * Pupppet librarian:
    * Really increases quality (depedency managment, using standart forge module)
