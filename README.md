@@ -24,7 +24,7 @@ Story line
      * Automatic development environment setup puppet-base-env.
      * Distributed Storm cluster sandbox storm-sandbox.
      * Using Vagrant and for FPM packaging testbed graylog2-sandbox.
-     * 
-  Tricks&Tips:
-   
+     *
+ * Vagrant is lowest common denominator, by using it we isolate the ops development process from the dest platform (EC2, Openstack etc..)
+ * Tricks&Tips:   
   * Use good hardware,16GB i7 and ssd is dirt chip (-> 4k nis)
