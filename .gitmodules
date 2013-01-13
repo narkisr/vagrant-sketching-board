@@ -1,0 +1,3 @@
+[submodule "js/cuepoint"]
+	path = js/cuepoint
+	url = git://github.com/owainlewis/cuepoint.git

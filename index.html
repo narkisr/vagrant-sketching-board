@@ -12,6 +12,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
+    <link rel="stylesheet" href="css/custom.css">
     <link rel="stylesheet" href="css/reveal.min.css">
     <link rel="stylesheet" href="css/theme/night.css" id="theme">
 
@@ -23,9 +24,25 @@
 	document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
     </script>
 
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+    <script src="js/cuepoint.js"></script>
     <!--[if lt IE 9]>
 		    <script src="lib/js/html5shiv.js"></script>
 		    <![endif]-->
+
+    <script>
+	$(document).ready(function(){
+	    //Slides object with a time (integer) and a html string
+	    var slides = {
+	    4: "First creating a project (using opsk)",
+	    4: "Vagrant actions",
+	    10: "Importing a box",
+	    12: "",
+	    20: "we are not done yet are we?"}
+
+	    cuepoint.init(slides);
+	    });
+    </script>
   </head>
 
   <body>
@@ -50,8 +67,7 @@
 		  <li>Introduction</li>
 		  <li>Basic workflow</li>
 		  <li>Philosophy</li>
-		  <li>Extension</li>
-		  <li>(Advanced) use cases</li>
+		  <li>Some (Advanced) use cases</li>
 		</ul>
 	    </p>
 
@@ -67,6 +83,12 @@
 	    </p>
 	  </section>
 
+	    <section>
+		<div id="subtitles"></div>
+		<video id="video" width="700" height="600" preload="auto" controls="" poster="">
+		  <source src="/home/ronen/Videos/out-2.ogv">
+		</video>
+	    </section>
 	</div>
 
     </div>
