@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/custom.css">
     <link rel="stylesheet" href="css/reveal.min.css">
     <link rel="stylesheet" href="css/theme/night.css" id="theme">
+    <link rel="stylesheet" href="css/effects.css">
 
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
@@ -31,17 +32,17 @@
 		    <![endif]-->
 
     <script>
-	$(document).ready(function(){
-	    //Slides object with a time (integer) and a html string
-	    var slides = {
-	    4: "First creating a project (using opsk)",
-	    4: "Vagrant actions",
-	    10: "Importing a box",
-	    12: "",
-	    20: "we are not done yet are we?"}
+	// $(document).ready(function(){
+	//     //Slides object with a time (integer) and a html string
+	//     var slides = {
+	//     4: "First creating a project (using opsk)",
+	//     4: "Vagrant actions",
+	//     10: "Importing a box",
+	//     12: "",
+	//     20: "we are not done yet are we?"}
 
-	    cuepoint.init(slides);
-	    });
+	//     cuepoint.init(slides);
+	//     });
     </script>
   </head>
 
@@ -53,8 +54,8 @@
 	<div class="slides">
 
 	  <section>
-	    <h1>Vagrant sketching board</h1>
-	    <h4>Playing in the sandbox</h4>
+	    <h2>Vagrant sketching board</h1>
+	    <h5>Playing in the sandbox</h4>
 	    <p>
 		<small>Created by <a href="narkisr.com">Ronen Narkis</a> / <a href="http://twitter.com/narkisr">@narkisr</a></small>
 	    </p>
@@ -84,30 +85,128 @@
 	  </section>
 
 	  <section>
-	    <div id="subtitles"></div>
-	    <video id="video" width="700" height="600" preload="auto" controls="" poster="">
-		<source src="/home/ronen/Videos/out-2.ogv">
-	    </video>
+	    <h4> The patio </h4>
+	    <pre><code> 
+% vagrant
+Usage: vagrant [-v] [-h] command [<args>]
+
+Available subcommands:
+     box
+     destroy
+     gem
+     halt
+     init
+     package
+     provision
+     reload
+     resume
+     ssh
+     ssh-config
+     status
+     suspend
+     up
+	    </code></pre> 
 	  </section>
 
 	  <section>
-	    <p> Sandboxing, why is it a good thing etc..</p>
+	    <h4> Bring'em home </h4>
+	    <pre><code> 
+% vagrant box add ubuntu-12.10 https://github.com/.../quantal64.box
+[vagrant] Downloading with Vagrant::Downloaders::HTTP...
+[vagrant] Downloading box: https://github.com/.../quantal64.box
+[vagrant] Downloading box: http://cloud.github.com/.../quantal64.box
+[vagrant] Progress: 2% (11765120 / 421326336) 
+	    </code></pre>
+	  </section>
+	  <section>
+	    <h4> A box is just a box</h4>
+	    <pre><code>
+% wget https://github.com/downloads/.../quantal64.box
+% mv quantal64.box quantal64.tar
+% tar -tvf quantal64.tar 
+-rw------- 501/20    421308928 2012-10-20 00:13 box-disk1.vmdk
+-rw------- 501/20        13983 2012-10-20 00:12 box.ovf
+-rw-r--r-- 501/20          505 2012-10-20 00:13 Vagrantfile
+	    </code></pre>
 	  </section>
 
 	  <section>
-	    <h2> Sandbox distribution </h2>
-	    <ul>
-	      <li>Using opsk structure</li>
-		<li><a href="https://github.com/mitchellh/vagrant-installers">vagrant installer</a></li>
-	    </ul>
+	    <h4> Vagrantfile </h4>
+	    <pre><code class='ruby'> 
+Vagrant::Config.run do |config|
+
+  config.vm.define :foo do |foo|
+    foo.vm.box = 'ubuntu-12.10'
+    foo.vm.network :bridged
+    foo.vm.customize ['modifyvm', :id, '--memory', 2048, '--cpus', 4]
+    foo.vm.host_name = 'foo'
+  end
+
+end 
+	    </code></pre>
+	    <aside class="notes"> 
+		No point in using Vagrant init as it creates a pile of garbage, 
+	    </aside>
 	  </section>
+
+	  <section>
+	    <h4> Let the magic begin</h4>
+	    <pre><code>
+% vagrant up 
+[foo] Importing base box 'ubuntu-12.10'...
+[foo] Matching MAC address for NAT networking...
+[foo] Clearing any previously set forwarded ports...
+[foo] Fixed port collision for 22 => 2222. Now on port 2200.
+[foo] Forwarding ports...
+[foo] -- 22 => 2200 (adapter 1)
+[foo] Creating shared folders metadata...
+[foo] Clearing any previously set network interfaces...
+[foo] Preparing network interfaces based on configuration...
+[foo] Running any VM customizations...
+[foo] Booting VM...
+[foo] Waiting for VM to boot. This can take a few minutes.
+[foo] VM booted and ready for use!
+[foo] Configuring and enabling network interfaces...
+[foo] Setting host name...
+[foo] Mounting shared folders...
+[foo] -- v-root: /vagrant
+	    </code></pre>
+	  </section>
+        <section>
+          <h4> Interrogate </h4>
+          <pre><code class='bash'>
+% vagrant ssh
+Welcome to Ubuntu 12.10 (GNU/Linux 3.5.0-17-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com/
+Last login: Fri Oct 19 22:12:08 2012 from 10.0.2.2
+vagrant@foo:~$ ifconfig 
+eth0      Link encap:Ethernet  HWaddr 08:00:27:73:3f:26  
+          inet addr:10.0.2.15  Bcast:10.0.2.255  Mask:255.255.255.0
+          ...
+
+eth1      Link encap:Ethernet  HWaddr 08:00:27:83:df:cb  
+          inet addr:192.168.5.24  Bcast:192.168.5.255  Mask:255.255.255.0
+          inet6 addr: fe80::a00:27ff:fe83:dfcb/64 Scope:Link
+          ...
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          ....
+vagrant@foo:~$
+	    </code></pre>
+        </section>
 	</div>
-
     </div>
 
     <script src="lib/js/head.min.js"></script>
     <script src="js/reveal.min.js"></script>
     <script src="js/conf.js"></script>
+    <script type="text/javascript"> 
+	Reveal.addEventListener( 'tiny', function() {
+	    console.log( '"customevent" has fired' );
+	    } );
+    </script>
 
   </body>
 </html>
