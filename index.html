@@ -172,9 +172,9 @@ end
 [foo] -- v-root: /vagrant
 	    </code></pre>
 	  </section>
-        <section>
-          <h4> Interrogate </h4>
-          <pre><code class='bash'>
+	  <section>
+	    <h4> Interrogate </h4>
+	    <pre><code class='bash'>
 % vagrant ssh
 Welcome to Ubuntu 12.10 (GNU/Linux 3.5.0-17-generic x86_64)
 
@@ -182,20 +182,20 @@ Welcome to Ubuntu 12.10 (GNU/Linux 3.5.0-17-generic x86_64)
 Last login: Fri Oct 19 22:12:08 2012 from 10.0.2.2
 vagrant@foo:~$ ifconfig 
 eth0      Link encap:Ethernet  HWaddr 08:00:27:73:3f:26  
-          inet addr:10.0.2.15  Bcast:10.0.2.255  Mask:255.255.255.0
-          ...
+	    inet addr:10.0.2.15  Bcast:10.0.2.255  Mask:255.255.255.0
+	    ...
 
 eth1      Link encap:Ethernet  HWaddr 08:00:27:83:df:cb  
-          inet addr:192.168.5.24  Bcast:192.168.5.255  Mask:255.255.255.0
-          inet6 addr: fe80::a00:27ff:fe83:dfcb/64 Scope:Link
-          ...
+	    inet addr:192.168.5.24  Bcast:192.168.5.255  Mask:255.255.255.0
+	    inet6 addr: fe80::a00:27ff:fe83:dfcb/64 Scope:Link
+	    ...
 
 lo        Link encap:Local Loopback  
-          inet addr:127.0.0.1  Mask:255.0.0.0
-          ....
+	    inet addr:127.0.0.1  Mask:255.0.0.0
+	    ....
 vagrant@foo:~$
 	    </code></pre>
-        </section>
+	  </section>
 	  <section>
 	    <h4> Vagrant &hearts; Virtualbox</h4>
 	    <pre><code class="bash"> 
@@ -213,7 +213,39 @@ Connection to 127.0.0.1 closed.
 i-love-you
 	    </code></pre>
 	  </section>
+	  <section>
+	    <h4> A sprinkle of puppets</h4>
+	    <pre><code>
+% cat Vagrantfile | grep puppet
 
+foo.vm.provision :puppet, :options => ["--modulepath=/vagrant/modules"]
+
+% cat manifests/default.pp
+
+group{ 'puppet': ensure  => present }
+
+node foo {
+  package{'unzip': ensure  => present }
+}
+	    </code></pre>
+	  </section>
+
+	  <section>
+	    <img src="images/opskeleton.png" alt="" />
+	    <aside class="notes"> Our opskeleton demo</aside>
+	  </section>
+
+
+	  <section>
+	    <h4> Why sandbox?</h4>
+	    <ul>
+		<li>Cloud agnostic</li>
+		<li>Easy to fork/distribute</li>
+		<li>Open for experimentation (speed and isolation wise)</li>
+		<li>Isolated from main system</li>
+		<li>Reproducible</li>
+	    </ul>
+	  </section>
 	</div>
     </div>
 
