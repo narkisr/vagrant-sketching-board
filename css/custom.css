@@ -1,7 +1,18 @@
 .whity .reveal .state-background {
 	background: white;
 }
-
+.whity .reveal {
+  color: black;
+}
+.whity .reveal h3,h2 {
+  margin: 0 0 20px 0;
+  color: rgb(151, 145, 145);
+  font-family: "Montserrat", Impact, sans-serif;
+  line-height: 0.9em;
+  letter-spacing: -0.03em;
+  text-transform: none;
+  text-shadow: none;
+}
 
 #video {
   width: 768px;
