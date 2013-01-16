@@ -32,17 +32,20 @@
 		    <![endif]-->
 
     <script>
-	// $(document).ready(function(){
-	//     //Slides object with a time (integer) and a html string
-	//     var slides = {
-	//     4: "First creating a project (using opsk)",
-	//     4: "Vagrant actions",
-	//     10: "Importing a box",
-	//     12: "",
-	//     20: "we are not done yet are we?"}
+	$(document).ready(function(){
+	    //Slides object with a time (integer) and a html string
+	    var slides = {
+	    5: "We start by generating a new project",
+	    15: "All the files are created within a new git repo",
+	    23: "Default recommended gems",
+	    34: "External Puppet depdencies",
+	    44: "Running Puppet from inside the VM", 
+	    56: "Hostname and box type initialized",
+	    69: "Default manifest ready to be used"
+	    }
 
-	//     cuepoint.init(slides);
-	//     });
+	    cuepoint.init(slides);
+	    });
     </script>
   </head>
 
@@ -247,10 +250,11 @@ node foo {
 		  <li>Evolutionary application</li>
 		</ul>
 	    </section>
-	    <section> 
+	    <section id='cuepoint'> 
 		<video id="video" width="768" preload="auto" controls="" poster="">
 		  <source src="Videos/opsk.ogv">
 		</video>
+		<div id="subtitles">Opsk demo</div>
 	    </section>
 
 	  </section>
