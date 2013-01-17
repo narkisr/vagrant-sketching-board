@@ -4,6 +4,7 @@
 .whity .reveal {
   color: black;
 }
+
 .whity .reveal h3,h2 {
   margin: 0 0 20px 0;
   color: rgb(151, 145, 145);
@@ -62,7 +63,7 @@ margin-right: 0; }
 
 #subtitles{
  position:absolute;
- top:300px; 
+ top:250px; 
  width:100%;background:url(../images/subtitle.png) 
  repeat;opacity:1;
  height:40px;
