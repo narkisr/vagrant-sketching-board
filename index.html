@@ -32,20 +32,8 @@
 		    <![endif]-->
 
     <script>
-	$(document).ready(function(){
-	    //Slides object with a time (integer) and a html string
-	    var slides = {
-	    5: "We start by generating a new project",
-	    15: "All the files are created within a new git repo",
-	    23: "Default recommended gems",
-	    34: "External Puppet depdencies",
-	    44: "Running Puppet from inside the VM", 
-	    56: "Hostname and box type initialized",
-	    69: "Default manifest ready to be used"
-	    }
-
-	    cuepoint.init(slides);
-	    });
+	$(document).ready(function(){ //Slides object with a time (integer) and a html string
+	    	});
     </script>
   </head>
 
@@ -88,51 +76,14 @@
 		</p>
 	    </section>
 
-	    <section>
-		<h4> The patio </h4>
-		<pre><code> 
-% vagrant
-Usage: vagrant [-v] [-h] command [<args>]
-
-Available subcommands:
-     box
-     destroy
-     gem
-     halt
-     init
-     package
-     provision
-     reload
-     resume
-     ssh
-     ssh-config
-     status
-     suspend
-     up
-		</code></pre> 
+          <section class='cuepoint' data-state='vagrant-demo'> 
+		<video id="vagrant-vid" width="768" preload="auto" controls="" poster="">
+		  <source src="Videos/vagrant-demo.ogv">
+		</video>
+		<div id="vagrant-sub" class='subtitles'></div>
 	    </section>
 
-	    <section>
-		<h4> Bring'em home </h4>
-		<pre><code> 
-% vagrant box add ubuntu-12.10 https://github.com/.../quantal64.box
-[vagrant] Downloading with Vagrant::Downloaders::HTTP...
-[vagrant] Downloading box: https://github.com/.../quantal64.box
-[vagrant] Downloading box: http://cloud.github.com/.../quantal64.box
-[vagrant] Progress: 2% (11765120 / 421326336) 
-		</code></pre>
-	    </section>
-	    <section>
-		<h4> A box is just a box</h4>
-		<pre><code>
-% wget https://github.com/downloads/.../quantal64.box
-% mv quantal64.box quantal64.tar
-% tar -tvf quantal64.tar 
--rw------- 501/20    421308928 2012-10-20 00:13 box-disk1.vmdk
--rw------- 501/20        13983 2012-10-20 00:12 box.ovf
--rw-r--r-- 501/20          505 2012-10-20 00:13 Vagrantfile
-		</code></pre>
-	    </section>
+
 
 	    <section>
 		<h4> Vagrantfile </h4>
@@ -153,53 +104,6 @@ end
 		</aside>
 	    </section>
 
-	    <section>
-		<h4> Let the magic begin</h4>
-		<pre><code>
-% vagrant up 
-[foo] Importing base box 'ubuntu-12.10'...
-[foo] Matching MAC address for NAT networking...
-[foo] Clearing any previously set forwarded ports...
-[foo] Fixed port collision for 22 => 2222. Now on port 2200.
-[foo] Forwarding ports...
-[foo] -- 22 => 2200 (adapter 1)
-[foo] Creating shared folders metadata...
-[foo] Clearing any previously set network interfaces...
-[foo] Preparing network interfaces based on configuration...
-[foo] Running any VM customizations...
-[foo] Booting VM...
-[foo] Waiting for VM to boot. This can take a few minutes.
-[foo] VM booted and ready for use!
-[foo] Configuring and enabling network interfaces...
-[foo] Setting host name...
-[foo] Mounting shared folders...
-[foo] -- v-root: /vagrant
-		</code></pre>
-	    </section>
-	    <section>
-		<h4> Interrogate </h4>
-		<pre><code class='bash'>
-% vagrant ssh
-Welcome to Ubuntu 12.10 (GNU/Linux 3.5.0-17-generic x86_64)
-
- * Documentation:  https://help.ubuntu.com/
-Last login: Fri Oct 19 22:12:08 2012 from 10.0.2.2
-vagrant@foo:~$ ifconfig 
-eth0      Link encap:Ethernet  HWaddr 08:00:27:73:3f:26  
-	    inet addr:10.0.2.15  Bcast:10.0.2.255  Mask:255.255.255.0
-	    ...
-
-eth1      Link encap:Ethernet  HWaddr 08:00:27:83:df:cb  
-	    inet addr:192.168.5.24  Bcast:192.168.5.255  Mask:255.255.255.0
-	    inet6 addr: fe80::a00:27ff:fe83:dfcb/64 Scope:Link
-	    ...
-
-lo        Link encap:Local Loopback  
-	    inet addr:127.0.0.1  Mask:255.0.0.0
-	    ....
-vagrant@foo:~$
-		</code></pre>
-	    </section>
 	    <section>
 		<h4> Vagrant &hearts; Virtualbox</h4>
 		<pre><code class="bash"> 
@@ -250,11 +154,11 @@ node foo {
 		  <li>Evolutionary application</li>
 		</ul>
 	    </section>
-	    <section id='cuepoint'> 
-		<video id="video" width="768" preload="auto" controls="" poster="">
+	    <section class='cuepoint' data-state='opsk-demo'> 
+		<video id="opsk-vid" width="768" preload="auto" controls="" poster="">
 		  <source src="Videos/opsk.ogv">
 		</video>
-		<div id="subtitles">Opsk demo</div>
+		<div id="opsk-sub" class='subtitles'>Opsk demo</div>
 	    </section>
 
 	  </section>
@@ -278,9 +182,37 @@ node foo {
     <script src="js/reveal.min.js"></script>
     <script src="js/conf.js"></script>
     <script type="text/javascript"> 
-	Reveal.addEventListener( 'tiny', function() {
-	    console.log( '"customevent" has fired' );
-	    } );
+      Reveal.addEventListener( 'vagrant-demo', function() {
+	   console.log( 'starting vagrant demo' );
+         var slides = {
+	     2:  "Vagrant interface",
+	     15: "box command",
+	     28: "Downloading a box",
+	     40: "Local storage",
+	     59: "Booting up",
+	     142: "Ssh'ing into the VM",
+	     150: "Listing network interfaces", 
+	     155: "Shared folder integration",
+	     187: "Vagrant halt",
+	     190: "Vagrant destroy"
+	    }
+	    cuepoint.init(slides,"vagrant-sub","vagrant-vid");
+	});
+
+	Reveal.addEventListener( 'opsk-demo', function() {
+	   console.log( 'starting opsk demo' );
+         var slides = {
+	     2: "We start by generating a new project",
+	     15: "All the files are created within a new git repo",
+	     23: "Default recommended gems",
+	     34: "External Puppet depdencies",
+	     44: "Running Puppet from inside the VM", 
+	     56: "Hostname and box type initialized",
+	     69: "Default manifest ready to be used"
+	    }
+	    cuepoint.init(slides,"opsk-sub","opsk-vid");
+	});
+
     </script>
 
   </body>

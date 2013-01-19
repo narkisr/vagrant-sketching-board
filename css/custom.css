@@ -15,12 +15,10 @@
   text-shadow: none;
 }
 
-#video {
+video {
   width: 768px;
   margin: 0 auto 10px auto;
 background: #555; }
-
-#tweet a {text-align:center}
 
 #intro {
   min-height: 120px;
@@ -30,8 +28,7 @@ clear: both; }
 #intro h1, #intro h2, #use h2 {
   color: #FFF;
 font-family: 'Georgia'; }
-#cuepoint p {
-color: #999; }
+.cuepoint p { color: #999; }
 
 #thumbs {
   width: 100%;
@@ -61,15 +58,15 @@ cursor: pointer; }
 #thumbs .thumbnail:last-child {
 margin-right: 0; }
 
-#subtitles{
- position:absolute;
- top:250px; 
- width:100%;background:url(../images/subtitle.png) 
- repeat;opacity:1;
- height:40px;
- color:#FFF;
- line-height:40px;
- padding:0 20px;}
+.subtitles{
+  position:absolute;
+  top:250px; 
+  width:100%;background:url(../images/subtitle.png) 
+  repeat;opacity:1;
+  height:40px;
+  color:#FFF;
+  line-height:40px;
+padding:0 20px;}
 footer {
 margin: 40px 0; }
 footer p {

@@ -25,15 +25,15 @@
 		function Cuepoint() {
 			this.nativeKeys = Object.keys;
 		}
-		Cuepoint.prototype.init = function(slides) {
+		Cuepoint.prototype.init = function(slides,subs,vid) {
 			var key, value, _results;
 			this.slides = slides;
-			this.subtitles = document.getElementById("subtitles");
-			this.video = document.getElementById("video");
+			this.subtitles = document.getElementById(subs);
+			this.video = document.getElementById(vid);
 			_results = [];
 			for (key in slides) {
 				value = slides[key];
-				this.addSlide(key, value);
+				this.addSlide(key, value, subs);
 				_results.push(this.events.call);
 			}
 			return _results;
@@ -51,7 +51,7 @@
 			this.video.currentTime = time;
 			return this.video.play();
 		};
-		Cuepoint.prototype.addSlide = function(time, html) {
+		Cuepoint.prototype.addSlide = function(time, html,subs) {
 			var self;
 			this.time = time;
 			this.html = html;
@@ -61,14 +61,14 @@
 			return this.video.addEventListener("timeupdate", function() {
 			    // console.log(done+ " " +shown + " "+time + " "+this.currentTime);
                        if (shown == false && this.currentTime  > time) {
-                          $("#subtitles").fadeIn(1000, function(){ });
+                          $('#'+subs).fadeIn(500, function(){ });
                           shown=true;
-                          console.log("Im shown" + html);
+                          // console.log("Im shown" + html);
                        }
                        if (done == false && this.currentTime - 3  > time  ) {
                           done = true;
-                          $("#subtitles").fadeOut(1000, function(){ });
-                          console.log("Im done " + html);
+                          $('#'+subs).fadeOut(500, function(){ });
+                          // console.log("Im done " + html);
                        }
 
 				if (this.currentTime >= time && this.currentTime <= time + 0.3) {
