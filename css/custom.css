@@ -1,8 +1,35 @@
 .whity .reveal .state-background {
 	background: white;
 }
+
 .whity .reveal {
   color: black;
+}
+
+.whity .reveal code {
+  background: white;
+  color: gray;
+}
+
+.whity .reveal .identifier{
+  color : black;
+}
+
+
+.whity .reveal .keyword{
+  color : rgb(196, 144, 57);
+}
+
+.whity .reveal .symbol{
+  color : red;
+}
+
+.whity .reveal .variable{
+  color: rgb(243, 167, 39);
+}
+
+.whity .reveal .string{
+  color: rgb(224, 54, 54);
 }
 
 .whity .reveal h3,h2 {

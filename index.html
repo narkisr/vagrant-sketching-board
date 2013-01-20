@@ -68,7 +68,7 @@
 	    </aside>
 	  </section>
 
-	  <section>
+	  <section id='introduction'>
 	    <section>
 		<p>
 		  <h2>va·grant </h2>
@@ -101,88 +101,6 @@ end
 		  No point in using Vagrant init as it creates a pile of garbage, 
 		</aside>
 	    </section>
-
-	 </section>
-
-	  <section data-state='whity' id='opskeleton'>
-	    <section> 
-		<img src="images/opskeleton.png" alt="" style='box-shadow: 0 0 0 0;border:0;' />
-		<aside class="notes"> Our opskeleton demo</aside>
-		<h3> An opinionated bootstrap tool </h3>
-	    </section>
-	    <section>
-		<h3> Key goals </h3>
-		<ul>
-		  <li>Dependency management</li>
-		  <li>Best practices</li>
-		  <li>Reproducibility and standardization </li>
-		  <li>Evolutionary application</li>
-		  <li>Code data segregation</li>
-		  <li>Development workflow</li>
-		</ul>
-	    </section>
-
-	    <section> 
-	     <h3> Dependencies </h3>
-	     <p>
-	      <ul>
-	        <li>OS version </li>
-	        <li>Ruby version </li>
-		  <li>Gems (Puppet, Vagrant ..)</li>
-	        <li>External Puppet modules</li>
-	      </ul> 
-	     </p> 
-	    </section>
-
-	    <section>
-		<h3> Librarian Puppet</h3>
-	      <pre><code class="ruby">
-forge "http://forge.puppetlabs.com"
-
-mod 'puppetlabs/stdlib'
-
-mod 'puppetlabs/apt'
-
-mod 'editfile',
-   :git => 'git://github.com/mstrauss/puppet-editfile.git' 
-	     	</code></pre>
-	    </section>
-
-	    <section>
-	      <h3> RVM </h3>
-<pre><code class="bash">
-ruby_string="ruby-1.9.3"
-gemset_name="foo-sandbox"
-
-if rvm list strings | grep -q "${ruby_string}" ; then
-  # Load or create the specified environment
-  if [[ -d "${rvm_path:-$HOME/.rvm}/environments" \
-        ...
-  else
-    rvm --create  "${ruby_string}@${gemset_name}"
-  fi
-  ( # Ensure that Bundler is installed, install it if it is not.
-    if ! command -v bundle ; then
-      gem install bundler
-    fi
-
-    # Bundle while redcing excess noise.
-    bundle | grep -v 'Using' | grep -v 'complete' | sed '/^$/d'
-  )&
-  else 
-   ...
-</code></pre>
-	    </section>
-	    <section class='cuepoint' data-state='opsk-demo'> 
-		<video id="opsk-vid" width="768" preload="auto" controls="" poster="">
-		  <source src="Videos/opsk.ogv">
-		</video>
-		<div id="opsk-sub" class='subtitles'>Opsk demo</div>
-	    </section>
-
-	  </section>
-    
-	  <section> 
         <section>
           <h4> Puppet integration </h4>               	
 		<pre><code class='ruby'> 
@@ -209,8 +127,131 @@ end
 	    <div id="puppet-sub" class='subtitles'></div>
 	  </section>
 
-      </section>
-	  <section>
+
+	 </section>
+
+	  <section data-state='whity' id='opskeleton'>
+	    <section> 
+		<img src="images/opskeleton.png" alt="" style='box-shadow: 0 0 0 0;border:0;' />
+		<aside class="notes"> Our Opskeleton demo</aside>
+		<h3> An opinionated bootstrap tool </h3>
+	    </section>
+	    <section>
+		<h3> Key goals </h3>
+		<ul>
+		  <li>Dependency management</li>
+		  <li>Best practices</li>
+		  <li>Reproducibility and standardization </li>
+		  <li>Evolutionary application</li>
+		  <li>Code data segregation</li>
+		  <li>Development workflow</li>
+		</ul>
+	    </section>
+
+	    <section> 
+	     <h3> Dependencies </h3>
+	     <p>
+	      <ul>
+	        <li>OS version (Vagrantfile)</li>
+	        <li>Ruby version </li>
+		  <li>Gems (Puppet, Vagrant ..)</li>
+	        <li>External Puppet modules</li>
+	      </ul> 
+	     </p> 
+	    </section>
+
+	    <section>
+		<h3> Librarian Puppet</h3>
+	      <pre><code class="ruby">
+forge "http://forge.puppetlabs.com"
+
+mod 'puppetlabs/stdlib'
+
+mod 'puppetlabs/apt'
+
+mod 'editfile',
+   :git => 'git://github.com/mstrauss/puppet-editfile.git' 
+	     	</code></pre>
+	    </section>
+
+	    <section>
+	      <h3> RVM </h3>
+<pre><code class="bash"> # .rvmrc
+ruby_string="ruby-1.9.3"
+gemset_name="foo-sandbox"
+
+if rvm list strings | grep -q "${ruby_string}" ; then
+  # Load or create the specified environment
+  if [[ -d "${rvm_path:-$HOME/.rvm}/environments" \
+        ...
+  else
+    rvm --create  "${ruby_string}@${gemset_name}"
+  fi
+  ( # Ensure that Bundler is installed, install it if it is not.
+    if ! command -v bundle ; then
+      gem install bundler
+    fi
+
+    # Bundle while redcing excess noise.
+    bundle | grep -v 'Using' | grep -v 'complete' | sed '/^$/d'
+  )&
+  else 
+   ...  </code></pre>
+          <aside class="notes">
+		Here we see the ruby version and the sandbox gemset (separation of dependencies between sandxboes)
+	      Bundle is automatically installed and bundle install is executed in the background
+	    </aside>
+	    </section>
+
+	    <section>
+	      <h3> Bundler </h3>
+	      <pre><code class="ruby">
+# Gemfile
+
+# opskelaton Gems
+source "https://rubygems.org"
+
+gem 'vagrant', '>=1.0.5'
+gem 'puppet'
+gem 'puppet-lint'
+gem 'librarian-puppet'
+gem 'rake'
+		</code></pre>
+	    </section>
+	    <section>
+	      <h3> Hiera </h3>
+	      <pre><code class="ruby">
+# hiera.yaml
+:backends:
+ - yaml
+:logger: console
+:hierarchy:
+ - '%{::virtual}'
+ - common
+:yaml:
+   :datadir: hieradata
+		</code></pre>
+	    </section>
+
+	    <section> 
+	     <h3> Easy execution</h3>
+	     <pre><code class="bash">
+# run.sh
+puppet apply --modulepath=modules:static-modules \
+       manifests/default.pp --hiera_config hiera.yaml  $@
+	     </code></pre> 
+	    </section>
+
+	    <section class='cuepoint' data-state='opsk-demo'> 
+		<video id="opsk-vid" width="768" preload="auto" controls="" poster="">
+		  <source src="Videos/opsk.ogv">
+		</video>
+		<div id="opsk-sub" class='subtitles'>Opsk demo</div>
+	    </section>
+
+	  </section>
+    
+		  <section>
 	    <h4> Why sandbox?</h4>
 	    <ul>
 		<li>Cloud agnostic</li>
@@ -218,7 +259,7 @@ end
 		<li>Open for experimentation (speed and isolation wise)</li>
 		<li>Isolated from main system</li>
 		<li>Reproducible</li>
-		<li>Distributed workflow (liks git but for VM's)</li>
+		<li>Distributed workflow (like git but for VM's)</li>
 	    </ul>
 	  </section>
 	</div>
