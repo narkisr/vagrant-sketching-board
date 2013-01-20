@@ -290,13 +290,14 @@ puppet apply --modulepath=modules:static-modules \
 	Reveal.addEventListener( 'opsk-demo', function() {
 	   console.log( 'starting opsk demo' );
          var slides = {
-	     2: "We start by generating a new project",
-	     15: "All the files are created within a new git repo",
-	     23: "Default recommended gems",
-	     34: "External Puppet depdencies",
-	     44: "Running Puppet from inside the VM", 
-	     56: "Hostname and box type initialized",
-	     69: "Default manifest ready to be used"
+	     8: "We start by generating a new project",
+	     17: "All the files are created within a new git repo",
+ 	     27: "Bundler done installing gems ",
+	     32: "Using librarian to install modules",
+	     53: "Booting up the VM",
+	     125: "Hostname is set",
+	     132: "Adding a package", 
+	     157: "Using run.sh from /vagrant"
 	    }
 	    cuepoint.init(slides,"opsk-sub","opsk-vid");
 	});
