@@ -83,8 +83,6 @@
 		<div id="vagrant-sub" class='subtitles'></div>
 	    </section>
 
-
-
 	    <section>
 		<h4> Vagrantfile </h4>
 		<pre><code class='ruby'> 
@@ -104,23 +102,7 @@ end
 		</aside>
 	    </section>
 
-	  <section>
-		<h4> A sprinkle of puppets</h4>
-		<pre><code>
-% cat Vagrantfile | grep puppet
-
-foo.vm.provision :puppet, :options => ["--modulepath=/vagrant/modules"]
-
-% cat manifests/default.pp
-
-group{ 'puppet': ensure  => present }
-
-node foo {
-  package{'unzip': ensure  => present }
-}
-		</code></pre>
-	    </section>
-	  </section>
+	 </section>
 
 	  <section data-state='whity' id='opskeleton'>
 	    <section> 
@@ -131,11 +113,65 @@ node foo {
 	    <section>
 		<h3> Key goals </h3>
 		<ul>
-		  <li>Dependency management (Both Puppet and Ruby)</li>
-		  <li>Correct presets</li>
+		  <li>Dependency management</li>
+		  <li>Best practices</li>
 		  <li>Reproducibility and standardization </li>
 		  <li>Evolutionary application</li>
+		  <li>Code data segregation</li>
+		  <li>Development workflow</li>
 		</ul>
+	    </section>
+
+	    <section> 
+	     <h3> Dependencies </h3>
+	     <p>
+	      <ul>
+	        <li>OS version </li>
+	        <li>Ruby version </li>
+		  <li>Gems (Puppet, Vagrant ..)</li>
+	        <li>External Puppet modules</li>
+	      </ul> 
+	     </p> 
+	    </section>
+
+	    <section>
+		<h3> Librarian Puppet</h3>
+	      <pre><code class="ruby">
+forge "http://forge.puppetlabs.com"
+
+mod 'puppetlabs/stdlib'
+
+mod 'puppetlabs/apt'
+
+mod 'editfile',
+   :git => 'git://github.com/mstrauss/puppet-editfile.git' 
+	     	</code></pre>
+	    </section>
+
+	    <section>
+	      <h3> RVM </h3>
+<pre><code class="bash">
+ruby_string="ruby-1.9.3"
+gemset_name="foo-sandbox"
+
+if rvm list strings | grep -q "${ruby_string}" ; then
+  # Load or create the specified environment
+  if [[ -d "${rvm_path:-$HOME/.rvm}/environments" \
+        ...
+  else
+    rvm --create  "${ruby_string}@${gemset_name}"
+  fi
+  ( # Ensure that Bundler is installed, install it if it is not.
+    if ! command -v bundle ; then
+      gem install bundler
+    fi
+
+    # Bundle while redcing excess noise.
+    bundle | grep -v 'Using' | grep -v 'complete' | sed '/^$/d'
+  )&
+  else 
+   ...
+</code></pre>
 	    </section>
 	    <section class='cuepoint' data-state='opsk-demo'> 
 		<video id="opsk-vid" width="768" preload="auto" controls="" poster="">
@@ -145,12 +181,35 @@ node foo {
 	    </section>
 
 	  </section>
+    
+	  <section> 
+        <section>
+          <h4> Puppet integration </h4>               	
+		<pre><code class='ruby'> 
+Vagrant::Config.run do |config|
 
-          <section>
-            	
-             <aside>puppet development workflow, side by side run and edit</aside>	
-          </section>
-          
+  config.vm.define :foo do |foo|
+    foo.vm.box = 'ubuntu-12.10'
+    foo.vm.network :bridged
+    foo.vm.customize ['modifyvm', :id, '--memory', 2048, '--cpus', 4]
+    foo.vm.host_name = 'foo'
+    foo.vm.provision :puppet, 
+       :options => ["--modulepath=/vagrant/modules:/vagrant/static-modules"]
+  end
+
+end 
+		</code></pre>
+          <aside class='notes'>puppet development workflow, side by side run and edit</aside>	
+        </section>
+ 
+        <section class='cuepoint' data-state='vagrant-demo'> 
+	     <video id="puppet-vid" width="768" preload="auto" controls="" poster="">
+		  <source src="Videos/puppet-demo.ogv">
+	    </video>
+	    <div id="puppet-sub" class='subtitles'></div>
+	  </section>
+
+      </section>
 	  <section>
 	    <h4> Why sandbox?</h4>
 	    <ul>
@@ -159,7 +218,7 @@ node foo {
 		<li>Open for experimentation (speed and isolation wise)</li>
 		<li>Isolated from main system</li>
 		<li>Reproducible</li>
-		<li> Distributed workflow (liks git but for VM's)</li>
+		<li>Distributed workflow (liks git but for VM's)</li>
 	    </ul>
 	  </section>
 	</div>
