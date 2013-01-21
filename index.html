@@ -284,7 +284,10 @@ puppet apply --modulepath=modules:static-modules \
 	     187: "Vagrant halt",
 	     190: "Vagrant destroy"
 	    }
+	    cuepoint.pause();
 	    cuepoint.init(slides,"vagrant-sub","vagrant-vid");
+	    cuepoint.setTime(0);
+	    cuepoint.play();
 	});
 
 	Reveal.addEventListener( 'opsk-demo', function() {
@@ -299,7 +302,10 @@ puppet apply --modulepath=modules:static-modules \
 	     132: "Adding a package", 
 	     157: "Using run.sh from /vagrant"
 	    }
+	    cuepoint.pause();
 	    cuepoint.init(slides,"opsk-sub","opsk-vid");
+	    cuepoint.setTime(0);
+	    cuepoint.play();
 	});
 
     </script>

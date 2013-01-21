@@ -79,10 +79,12 @@
 			false);
 		};
 		Cuepoint.prototype.play = function() {
-			return this.video.play();
+                  if(this.video){
+			  return this.video.play();
+                  }
 		};
 		Cuepoint.prototype.pause = function() {
-			if (!this.video.paused) {
+			if (this.video && !this.video.paused) {
 				return this.video.pause();
 			}
 		};
