@@ -120,11 +120,11 @@ end
           <aside class='notes'>puppet development workflow, side by side run and edit</aside>	
         </section>
  
-        <section class='cuepoint' data-state='vagrant-demo'> 
+        <section class='cuepoint' data-state='puppet-demo'> 
 	     <video id="puppet-vid" width="768" preload="auto" controls="" poster="">
 		  <source src="Videos/puppet-demo.ogv">
 	    </video>
-	    <div id="puppet-sub" class='subtitles'></div>
+	    <div id="puppet-sub" class='subtitles'>Puppet integration</div>
 	  </section>
 
 
@@ -286,6 +286,22 @@ puppet apply --modulepath=modules:static-modules \
 	    }
 	    cuepoint.pause();
 	    cuepoint.init(slides,"vagrant-sub","vagrant-vid");
+	    cuepoint.setTime(0);
+	    cuepoint.play();
+	});
+
+      Reveal.addEventListener( 'puppet-demo', function() {
+	   console.log( 'starting puppet demo' );
+         var slides = {
+	     2:  "Checking current status",
+	     15: "Adding Puppet configuration",
+	     28: "Adding a package",
+	     47: "Run during reload",
+	     120: "Adding from within",
+	     142: "Local run"
+	    }
+	    cuepoint.pause();
+	    cuepoint.init(slides,"puppet-sub","puppet-vid");
 	    cuepoint.setTime(0);
 	    cuepoint.play();
 	});
