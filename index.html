@@ -251,7 +251,28 @@ puppet apply --modulepath=modules:static-modules \
 
 	  </section>
     
-		  <section>
+	  <section id='use-cases'>
+	    <section>
+	      <h3> Manage your base env</h3>
+		<p> We use a Vagrant box as a quick way of adding features to our development environment</p>
+	    </section>
+	    <section>
+	      <h3> Distributed machine cluster</h3>
+	      <p>Setting up a cluster of Strom machines quickly for development purposes</p>
+	    </section>
+	    <section>
+	      <h3> Packaging and Provisioning</h3>
+	      <p> Using fpm-cookery to package rpms on one sandbox then consume them via Puppet on another sandbox (close the loop).</p>
+	    </section>
+	  </section>
+
+	  <section> 
+	    <section>
+	      <h3> Extending Vagrant </h3>
+		<p> Dns and Vagrant is no fun, here we create a local DNS server and plugin to automanange ip resolution on our local machine</p>
+	    </section> 
+	  </section>
+	 <section>
 	    <h4> Why sandbox?</h4>
 	    <ul>
 		<li>Cloud agnostic</li>
