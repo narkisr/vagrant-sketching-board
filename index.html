@@ -68,7 +68,7 @@
 	    </aside>
 	  </section>
 
-	  <section id='introduction'>
+	 	  <section id='Vagrant basics'>
 	    <section>
 		<p>
 		  <h2>va·grant </h2>
@@ -135,6 +135,15 @@ end
 		<img src="images/opskeleton.png" alt="" style='box-shadow: 0 0 0 0;border:0;' />
 		<aside class="notes"> Our Opskeleton demo</aside>
 		<h3> An opinionated bootstrap tool </h3>
+	    </section>
+	    <section>
+	      <h3> The problem</h3>
+		<ul>
+		  <li>Too many broken Puppet modules out there</li>
+		  <li>Not clear what goes where (no clear standart)</li>
+		  <li>Hard to distibute living enviroments</li>
+		  <li>Existing tools aren't used or used wrong</li>
+		</ul>
 	    </section>
 	    <section>
 		<h3> Key goals </h3>
@@ -242,6 +251,13 @@ puppet apply --modulepath=modules:static-modules \
 	     </code></pre> 
 	    </section>
 
+	    <section>
+	      <p> 
+		  Developed modules go under static-modules, external go under modules
+	        Once a module is done it can be promoted to an external module  
+		</p>
+	    </section>
+
 	    <section class='cuepoint' data-state='opsk-demo'> 
 		<video id="opsk-vid" width="768" preload="auto" controls="" poster="">
 		  <source src="Videos/opsk.ogv">
@@ -250,15 +266,46 @@ puppet apply --modulepath=modules:static-modules \
 	    </section>
 
 	  </section>
-    
-	  <section id='use-cases'>
-	    <section>
-	      <h3> Manage your base env</h3>
-		<p> We use a Vagrant box as a quick way of adding features to our development environment</p>
+
+       <section>
+	   <section>
+	     <h4> Sandboxing</h4>
+	     <img src="images/cat-sandbox.jpg" width='50%' hight='50%'  alt="" />
+	  </section>
+
+	    <section> 
+		<h4>Sandboxing benefits</h4>
+		<ul>
+		  <li>Portable (Cloud agnostic)</li>
+		  <li>Easy to fork/distribute</li>
+		  <li>Open for experimentation (speed and isolation wise)</li>
+		  <li>Isolated from main system</li>
+		  <li>Reproducible</li>
+		  <li>Distributed workflow (like git but for VM's)</li>
+		</ul>
 	    </section>
+	  </section>
+
+   
+	  <section id='use-cases'>
+	    <section><h1> Use cases</h1></section>
+
 	    <section>
-	      <h3> Distributed machine cluster</h3>
-	      <p>Setting up a cluster of Strom machines quickly for development purposes</p>
+	      <h3>puppet-base-env</h3>
+		<p> Use a sandbox to manage development environment</p>
+	  	 <video id="vagrant-vid" width="768" preload="auto" controls="" poster="">
+		  <source src="Videos/basenv-demo.ogv">
+		 </video>
+		 <div id="vagrant-sub" class='subtitles'></div>
+	    </section>
+
+	    <section>
+	      <h3> Storm cluster</h3>
+	      <p>Setting up a cluster quickly for development purposes</p>
+	  	<video id="storm-vid" width="768" preload="auto" controls="" poster="">
+		  <source src="Videos/storm-demo.ogv">
+		</video>
+		<div id="storm-sub" class='subtitles'></div>
 	    </section>
 	    <section>
 	      <h3> Packaging and Provisioning</h3>
@@ -272,17 +319,6 @@ puppet apply --modulepath=modules:static-modules \
 		<p> Dns and Vagrant is no fun, here we create a local DNS server and plugin to automanange ip resolution on our local machine</p>
 	    </section> 
 	  </section>
-	 <section>
-	    <h4> Why sandbox?</h4>
-	    <ul>
-		<li>Cloud agnostic</li>
-		<li>Easy to fork/distribute</li>
-		<li>Open for experimentation (speed and isolation wise)</li>
-		<li>Isolated from main system</li>
-		<li>Reproducible</li>
-		<li>Distributed workflow (like git but for VM's)</li>
-	    </ul>
-	  </section>
 	</div>
     </div>
 
@@ -294,16 +330,12 @@ puppet apply --modulepath=modules:static-modules \
       Reveal.addEventListener( 'vagrant-demo', function() {
 	   console.log( 'starting vagrant demo' );
          var slides = {
-	     2:  "Vagrant interface",
-	     15: "box command",
-	     28: "Downloading a box",
-	     40: "Local storage",
-	     59: "Booting up",
-	     142: "Ssh'ing into the VM",
-	     150: "Listing network interfaces", 
-	     155: "Shared folder integration",
-	     187: "Vagrant halt",
-	     190: "Vagrant destroy"
+	     2:  "interface",
+	     15: "boxes and Local store",
+	     59: "booting up",
+	     142: "ssh'ing into the VM",
+	     150: "network interfaces and shared folder", 
+	     187: "halting and destroying",
 	    }
 	    cuepoint.pause();
 	    cuepoint.init(slides,"vagrant-sub","vagrant-vid");
