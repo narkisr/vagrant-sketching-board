@@ -243,7 +243,7 @@ gem 'rake'
 	    </section>
 
 	    <section> 
-	     <h3> Easy execution</h3>
+	     <h3>Easy execution</h3>
 	     <pre><code class="bash">
 # run.sh
 puppet apply --modulepath=modules:static-modules \
@@ -335,6 +335,42 @@ puppet apply --modulepath=modules:static-modules \
 end
 		</code></pre>
 	    </section>
+	    <section> 
+		<h2>Packaging (fpm) </h2>
+	    </section>
+
+	    <section>
+	      <pre><code class="bash">
+$ fpm -s dir -t deb -n jenkins -v 1.396 --prefix /opt/jenkins jenkins.war
+		</code></pre>
+		<aside class="notes"> FPM is a really nice too but it relies upon the use of flags, it does not specify any DSL or structure</aside>
+	    </section>
+
+          <section>
+            <h3> FPM Cookery</h3>
+<pre><code class="ruby">class ZeroMQ < FPM::Cookery::Recipe
+  description 'The Intelligent Transport Layer'
+
+  name     'zeromq'
+  version  '2.1.7'
+  homepage 'http://www.zeromq.org'
+  source   'http://download.zeromq.org/zeromq-2.1.7.tar.gz'
+  sha256   '2a1416d0a3ea55ae17d43417fd9bd193412cc9101e144bc8d3bd19fe36816e0d'
+  conflicts 'libzmq0', 'zeromq-bin'
+  replaces  'libzmq0', 'zeromq-bin'
+
+  def build
+    configure :prefix => prefix
+    make
+  end
+
+  def install
+    make :install, 'DESTDIR' => destdir
+  end
+end
+		</code></pre>
+          </section>
+
 	    <section>
 	  	<!-- <video id="storm-vid" width="768" preload="auto" controls="" poster=""> -->
 		  <!-- <source src="Videos/storm-demo.ogv"> -->
