@@ -140,8 +140,8 @@ end
 	      <h3> The problem</h3>
 		<ul>
 		  <li>Too many broken Puppet modules out there</li>
-		  <li>Not clear what goes where (no clear standart)</li>
-		  <li>Hard to distibute living enviroments</li>
+		  <li>Not clear what goes where (no clear standard)</li>
+		  <li>Hard to distribute living environments</li>
 		  <li>Existing tools aren't used or used wrong</li>
 		</ul>
 	    </section>
@@ -341,7 +341,10 @@ end
 
 	    <section>
 	      <pre><code class="bash">
+$ wget http://ftp.osuosl.org/pub/hudson/war/1.396/jenkins.war
+
 $ fpm -s dir -t deb -n jenkins -v 1.396 --prefix /opt/jenkins jenkins.war
+
 		</code></pre>
 		<aside class="notes"> FPM is a really nice too but it relies upon the use of flags, it does not specify any DSL or structure</aside>
 	    </section>
