@@ -388,9 +388,42 @@ end
 
 	  <section> 
 	    <section>
-	      <h3> Extending Vagrant </h3>
-		<p> Dns and Vagrant is no fun, here we create a local DNS server and plugin to automanange ip resolution on our local machine</p>
+	      <h1> Extending Vagrant </h1>
 	    </section> 
+
+	    <section> 
+		<h3> Middleware </h3>
+	     
+	    <pre><code class="ruby"> 
+class Update
+  def initialize(app, env)
+    @app = app
+  end
+
+  def call(env)
+    @app.call(env)
+    update env[:vm] if env["vm"].state == :running
+  end
+
+  protected
+  def update(vm)
+    VagrantDns::NetworkBinder.new.bind(vm)
+  end
+end
+	    </code></pre>	
+	      
+	    </section>
+
+	  <section>
+	    <h3> Registration </h3>
+	    <pre><code class="ruby">
+Vagrant.actions[:provision].insert_after(Vagrant::Action::VM::Provision, Update) 
+
+Vagrant.actions[:start].insert_after(Vagrant::Action::VM::Boot, Update) 
+
+Vagrant.actions[:destroy].insert_after(Vagrant::Action::VM::ProvisionerCleanup, Remove)  
+	    </code></pre>
+	  </section>
 	  </section>
 	</div>
     </div>
