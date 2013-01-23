@@ -87,7 +87,7 @@ margin-right: 0; }
 
 .subtitles{
   position:absolute;
-  top:250px; 
+  top:50%; 
   width:100%;background:url(../images/subtitle.png) 
   repeat;opacity:1;
   height:40px;
