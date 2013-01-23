@@ -252,10 +252,12 @@ puppet apply --modulepath=modules:static-modules \
 	    </section>
 
 	    <section>
-	      <p> 
-		  Developed modules go under static-modules, external go under modules
-	        Once a module is done it can be promoted to an external module  
-		</p>
+		<h3> Module life cycle</h3>
+		<ul>
+		  <li> Developed modules go under static-modules</li>
+		  <li> Once they get mature they get thier own repo</li>
+		  <li> Imported back into modules</li>
+		</ul>
 	    </section>
 
 	    <section class='cuepoint' data-state='opsk-demo'> 
@@ -268,8 +270,11 @@ puppet apply --modulepath=modules:static-modules \
 	  </section>
 
        <section>
+	   <section> 
+	    <h1> Sandboxing</h1>
+	   </section>
+
 	   <section>
-	     <h4> Sandboxing</h4>
 	     <img src="images/cat-sandbox.jpg" width='50%' hight='50%'  alt="" />
 	  </section>
 
@@ -299,12 +304,41 @@ puppet apply --modulepath=modules:static-modules \
 		 <div id="vagrant-sub" class='subtitles'></div>
 	    </section>
 
+	    <section> 
+		<h3> Storm </h3>
+		<p>A clustered development enviroment</p>
+            <img src="images/storm-topology.png" style='border:none;background:black;' alt="" /> 
+	    </section>
+
 	    <section>
-	      <h3> Storm cluster</h3>
-	      <p>Setting up a cluster quickly for development purposes</p>
-	  	<video id="storm-vid" width="768" preload="auto" controls="" poster="">
-		  <source src="Videos/storm-demo.ogv">
-		</video>
+	      <h3>Mutli VM </h3>
+<pre><code class="ruby">Vagrant::Config.run do |config|
+
+  config.vm.define :nimbus do |nimbus|
+    # ...
+    nimbus.vm.host_name = 'nimbus'
+    nimbus.vm.network :hostonly, "192.168.1.10"
+  end
+
+  config.vm.define :super_a do |supervisor|
+    # ...
+    supervisor.vm.host_name = 'supervisor-a'
+    supervisor.vm.network :hostonly, "192.168.1.11"
+  end
+ 
+  config.vm.define :super_b do |supervisor|
+    # ...
+    supervisor.vm.host_name = 'supervisor-b'
+    supervisor.vm.network :hostonly, "192.168.1.12"
+  end
+
+end
+		</code></pre>
+	    </section>
+	    <section>
+	  	<!-- <video id="storm-vid" width="768" preload="auto" controls="" poster=""> -->
+		  <!-- <source src="Videos/storm-demo.ogv"> -->
+		<!--</video>-->
 		<div id="storm-sub" class='subtitles'></div>
 	    </section>
 	    <section>
