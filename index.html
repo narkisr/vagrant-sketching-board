@@ -374,15 +374,16 @@ end
 		</code></pre>
           </section>
 
-	    <section>
-	  	<!-- <video id="storm-vid" width="768" preload="auto" controls="" poster=""> -->
-		  <!-- <source src="Videos/storm-demo.ogv"> -->
-		<!--</video>-->
+	    <section class='cuepoint' data-state='storm-demo'>
+	  	<video id="storm-vid" width="768" preload="auto" controls="" poster="">
+		  <source src="Videos/storm-demo.ogv">
+		</video>
 		<div id="storm-sub" class='subtitles'></div>
 	    </section>
 	    <section>
-	      <h3> Packaging and Provisioning</h3>
-	      <p> Using fpm-cookery to package rpms on one sandbox then consume them via Puppet on another sandbox (close the loop).</p>
+	      <h3>Packaging and Provisioning</h3>
+		<img src="images/packaging.png" style='box-shadow: 0 0 0 0;border:0;background:black;' alt="" />
+	      <!-- <p>Using fpm-cookery to package rpms on one sandbox then consume them via Puppet on another sandbox (close the loop).</p> -->
 	    </section>
 	  </section>
 
@@ -482,6 +483,23 @@ Vagrant.actions[:destroy].insert_after(Vagrant::Action::VM::ProvisionerCleanup, 
 	    cuepoint.setTime(0);
 	    cuepoint.play();
 	});
+
+	Reveal.addEventListener( 'storm-demo', function() {
+	   console.log( 'starting storm demo' );
+         var slides = {
+	     2:   "cooking debs",
+	     60:  "booting up",
+	     130: "nimbus is up", 
+	     190: "super_a is up", 
+	     249: "super_b is up", 
+	     252: "nimbus ui shows two supervisors"
+	    }
+	    cuepoint.pause();
+	    cuepoint.init(slides,"storm-sub","storm-vid");
+	    cuepoint.setTime(0);
+	    cuepoint.play();
+	});
+
 
     </script>
 
