@@ -387,7 +387,10 @@ end
 	    <section>
 	      <h3>Packaging and Provisioning</h3>
 		<img src="images/packaging.png" style='box-shadow: 0 0 0 0;border:0;background:black;' alt="" />
-	      <!-- <p>Using fpm-cookery to package rpms on one sandbox then consume them via Puppet on another sandbox (close the loop).</p> -->
+		<aside class="notes"> 
+	       Wede like to build rpms that have complex native dependencies, the packaging vm holds these deps, 
+             Note that we don't want to pollute our host machine with these so sandboxing is a win
+		</aside>
 	    </section>
 
 	     <section class='cuepoint' data-state='packaging-demo'>
