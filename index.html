@@ -383,11 +383,20 @@ end
 		</video>
 		<div id="storm-sub" class='subtitles'></div>
 	    </section>
+
 	    <section>
 	      <h3>Packaging and Provisioning</h3>
 		<img src="images/packaging.png" style='box-shadow: 0 0 0 0;border:0;background:black;' alt="" />
 	      <!-- <p>Using fpm-cookery to package rpms on one sandbox then consume them via Puppet on another sandbox (close the loop).</p> -->
 	    </section>
+
+	     <section class='cuepoint' data-state='packaging-demo'>
+	  	<video id="packaging-vid" width="768" preload="auto" controls="" poster="">
+		  <source src="Videos/packaging-demo.ogv">
+		</video>
+		<div id="packaging-sub" class='subtitles'></div>
+	    </section>
+
 	  </section>
 
 	  <section> 
@@ -502,6 +511,21 @@ Vagrant.actions[:destroy].insert_after(Vagrant::Action::VM::ProvisionerCleanup, 
 	    cuepoint.setTime(0);
 	    cuepoint.play();
 	});
+
+	Reveal.addEventListener( 'packaging-demo', function() {
+	   console.log( 'starting packaging demo' );
+         var slides = {
+	     2:  "current status",
+	     15:  "cooking in first sandbox",
+	     32:  "copying package to /vagrant/local-repo",
+	     65: "installing rpm on puppetizied machine"
+	    }
+	    cuepoint.pause();
+	    cuepoint.init(slides,"packaging-sub","packaging-vid");
+	    cuepoint.setTime(0);
+	    cuepoint.play();
+	});
+
 
 
     </script>
