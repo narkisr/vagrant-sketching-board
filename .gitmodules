@@ -1,3 +1,6 @@
 [submodule "js/cuepoint"]
 	path = js/cuepoint
 	url = git://github.com/owainlewis/cuepoint.git
+[submodule "lib/highlight_js"]
+	path = lib/highlight_js
+	url = git://github.com/isagalaev/highlight.js.git
