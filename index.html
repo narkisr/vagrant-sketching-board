@@ -297,7 +297,7 @@ puppet apply --modulepath=modules:static-modules \
 
 	    <section> 
 		<h3>puppet-base-env</h3>
-		<p> Use a sandbox to manage development environment</p>
+		<p> A sandbox to manage development machines</p>
 	    </section>
 
 	    <section>
@@ -406,6 +406,32 @@ end
 	    <section>
 	      <h1> Extending Vagrant </h1>
 	    </section> 
+
+	    <section>
+		<h3>Host lookup nightmare</h3>
+<pre><code class="ruby">    master.vm.host_name = 'jenkins-master'
+    master.vm.network :hostonly, "192.168.1.10"
+
+    # ...
+    slave.vm.host_name = 'jenkins-slave'
+    slave.vm.network :hostonly, "192.168.1.10"
+
+    # ...
+    artifactory.vm.host_name = 'artifactory'
+    artifactory.vm.network :hostonly, "192.168.1.11"
+
+    # ...
+    gitolite.vm.host_name = 'gitolite'
+    gitolite.vm.network :hostonly, "192.168.1.12"
+</code></pre>
+		<aside class="notes"> host lookup while using multiple machines is hard, the solution is Vagrant dns server</aside>
+	    </section>
+
+	    <section>
+	      <h2> Vagrant DNS server</h2>
+	    </section>
+
+	    <section><img src="images/vagrant-dns-server.png" style='border:none;background:black;' alt="" /></section>
 
 	    <section> 
 		<h3> Middleware </h3>
