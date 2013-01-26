@@ -301,15 +301,60 @@ puppet apply --modulepath=modules:static-modules \
 	    </section>
 
 	    <section>
-	  	 <video id="vagrant-vid" width="768" preload="auto" controls="" poster="">
-		  <source src="Videos/basenv-demo.ogv">
-		 </video>
-		 <div id="vagrant-sub" class='subtitles'></div>
+		<h3> Puppet modules overview</h3>
+<pre><code class="ruby"># manifests/default.pp
+
+$scm_user = hiera('scm_user')
+$scm_email = hiera('scm_email')
+$username = hiera('user')
+$home = hiera('home')
+
+include git
+include shell
+include baseline
+include langs
+include vim
+include build
+
+class {'desktop':
+  home     => $home,
+  username => $username
+}
+</code></pre>
 	    </section>
+
+          <section>
+		<h3> Virtualbox vs Physical</h3>
+<pre><code class="ruby"># hiera.yaml
+---
+:backends:
+ - yaml
+:logger: console
+:hierarchy: 
+ - '%{::virtual}'
+ - common
+:yaml:
+   :datadir: hieradata
+		</code></pre>
+<pre><code class="ruby"># hieradata/physical.yaml
+---
+user: "ronen"
+home: "/home/ronen"
+scm_user: "narkisr"
+scm_email: "narkisr@gmail.com"		
+</code></pre>
+<pre><code class="ruby"># hieradata/virtualbox.yaml
+--- 
+user: "vagrant"
+home: "/home/vagrant"
+scm_user: "vagrant"
+scm_email: "vagrant@gmail.com"
+</code></pre>
+          </section>
 
 	    <section> 
 		<h3> Storm </h3>
-		<p>A clustered development enviroment</p>
+		<p> clustered environment</p>
             <img src="images/storm-topology.png" style='border:none;background:black;' alt="" /> 
 	    </section>
 
@@ -338,11 +383,9 @@ puppet apply --modulepath=modules:static-modules \
 end
 		</code></pre>
 	    </section>
-	    <section> 
-		<h2>Packaging (fpm) </h2>
-	    </section>
-
+	   
 	    <section>
+		<h2> Fpm </h2>
 	      <pre><code class="bash">
 $ wget http://ftp.osuosl.org/pub/hudson/war/1.396/jenkins.war
 
@@ -440,10 +483,39 @@ end
 		<div id="vagrantdns-sub" class='subtitles'></div>
 	    </section>
 
+          <section>
+		<h3> Usage </h3>
+<pre><code class="ruby"># opskelaton Gems
+source "https://rubygems.org"
+
+gem 'vagrant', '>=1.0.5'
+gem 'puppet'
+gem 'puppet-lint'
+gem 'librarian-puppet'
+gem 'rake'
+# in order to use we add the gem
+gem 'vagrant-dns-server' 
+		</code></pre>
+          </section>
+
+	    <section>
+	      <h2> Implementation </h2>
+	    </section>
+
+	  <section>
+	    <h3> Registration </h3>
+	    <pre><code class="ruby">
+Vagrant.actions[:provision].insert_after(Vagrant::Action::VM::Provision, Update) 
+
+Vagrant.actions[:start].insert_after(Vagrant::Action::VM::Boot, Update) 
+
+Vagrant.actions[:destroy].insert_after(Vagrant::Action::VM::ProvisionerCleanup, Remove)  
+	    </code></pre>
+	  </section>
+
 
 	    <section> 
 		<h3> Middleware </h3>
-	     
 	    <pre><code class="ruby"> 
 class Update
   def initialize(app, env)
@@ -465,13 +537,49 @@ end
 	    </section>
 
 	  <section>
-	    <h3> Registration </h3>
-	    <pre><code class="ruby">
-Vagrant.actions[:provision].insert_after(Vagrant::Action::VM::Provision, Update) 
+	    <h3> Accessing VM properties </h3>
+<pre><code class="ruby"> 
+class NetworkBinder          
+ def bind(vm)
+  (host,ip) = host_ip(vm)
+  Status.new.report(host,ip,:up)  
+ end                        
+ # ...  
+ private 
+ def host_ip(vm)            
+   networks = vm.config.vm.networks.find_all do |type,network_parameters|
+     type == :hostonly      
+   end                      
+   ips = networks.map {|type,params| params.first}
+   host = vm.config.vm.host_name   
+   [host,ips.first]         
+ end
+end
 
-Vagrant.actions[:start].insert_after(Vagrant::Action::VM::Boot, Update) 
+</code></pre>
+  </section>
 
-Vagrant.actions[:destroy].insert_after(Vagrant::Action::VM::ProvisionerCleanup, Remove)  
+  <section>
+    <h3> UI and Zeromq</h3>
+   <pre><code class="ruby"> 
+UI = Vagrant::UI::Colored.new('dns') 
+class Status
+ def report(host,ip,status)
+  context = ZMQ::Context.new      
+  pub = context.socket(ZMQ::PUB)  
+  pub.connect(CONF.get('zmq_url'))
+
+  UI.say(:debug,"connection made")
+  res = pub.send("#{CHANNEL} #{host} #{ip} #{status.to_s}", ZMQ::NOBLOCK)
+
+  UI.say(:info,"notifying server with #{status} status") if res
+  UI.say(:info, "server not up, skipping notifying #{status} status") if not res
+
+  pub.close
+ end
+end
+
+	    
 	    </code></pre>
 	  </section>
 	  </section>
