@@ -433,6 +433,14 @@ end
 
 	    <section><img src="images/vagrant-dns-server.png" style='border:none;background:black;' alt="" /></section>
 
+          <section class='cuepoint' data-state='vagrantdns-demo'> 
+		<video id="vagrantdns-vid" width="768" preload="auto" controls="" poster="">
+		  <source src="Videos/vagrant-dns-demo.ogv">
+		</video>
+		<div id="vagrantdns-sub" class='subtitles'></div>
+	    </section>
+
+
 	    <section> 
 		<h3> Middleware </h3>
 	     
@@ -551,6 +559,22 @@ Vagrant.actions[:destroy].insert_after(Vagrant::Action::VM::ProvisionerCleanup, 
 	    }
 	    cuepoint.pause();
 	    cuepoint.init(slides,"packaging-sub","packaging-vid");
+	    cuepoint.setTime(0);
+	    cuepoint.play();
+	});
+
+	Reveal.addEventListener( 'vagrantdns-demo', function() {
+	   console.log( 'starting vagrant dns demo' );
+         var slides = {
+	     2:  "initial state",
+	     10: "local dns server",
+	     27: "booting sandboxes",
+	     63: "registration",
+	     75: "host ping",
+	     95: "sandbox ping"
+	    }
+	    cuepoint.pause();
+	    cuepoint.init(slides,"vagrantdns-sub","vagrantdns-vid");
 	    cuepoint.setTime(0);
 	    cuepoint.play();
 	});
