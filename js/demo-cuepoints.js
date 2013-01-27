@@ -89,9 +89,11 @@
 	  document.getElementById(id).playbackRate -= 1.0;
 	}
 
+      var curr_vid;
 	function registerCue(data){
 	  Reveal.addEventListener( data.state, function() {
 	   console.log('starting '+ data.name  +'dns demo');
+	   curr_vid = data.vid;
 	   cuepoint.pause();
 	   cuepoint.init(data.slides,data.subs,data.vid);
 	   cuepoint.setTime(0);

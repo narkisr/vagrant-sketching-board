@@ -79,8 +79,6 @@
 		  <source src="Videos/vagrant-demo.ogv">
 		</video>
 		<div id="vagrant-sub" class='subtitles'></div>
-		<button onclick="speedup('vagrant-vid')">+</button>
-		<button onclick="speedown('vagrant-vid')">-</button>
 	    </section>
 
 	    <section>
@@ -495,7 +493,7 @@ end
 
 	  <section> 
 	    <section>
-	      <h1> Extending Vagrant </h1>
+	      <h2> Extending Vagrant </h2>
 	    </section> 
 
 	    <section>
@@ -658,9 +656,9 @@ end
 	    <section>
 	      <h3> Summary </h3>
 		<ul>
-		  <li> Sanboxes are integral to dev process</li>
-		  <li> Vagrant and tools combined in opsk offer clear path </li>
-		  <li> Don't be afraid to extend Vagrant</li>
+		  <li> Sandboxes are key to devop process</li>
+		  <li> Use opsk for create standard sandboxes</li>
+		  <li> Experiment extend and have fun! </li>
 		</ul>
 	    </section>
 
@@ -685,5 +683,13 @@ end
     <script src="js/reveal.min.js"></script>
     <script src="js/conf.js"></script>
     <script src="js/demo-cuepoints.js"></script>
+    <script type="text/javascript"> 
+    keypress.combo("+", function() {
+	  speedup(curr_vid);
+    }); 
+    keypress.combo("shift _", function() {
+	  speedown(curr_vid);
+    }); 
+    </script>
   </body>
 </html>
