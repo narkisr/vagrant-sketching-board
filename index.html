@@ -701,6 +701,7 @@ end
     <script src="js/conf.js"></script>
     <script type="text/javascript"> 
       Reveal.addEventListener( 'vagrant-demo', function() {
+
 	   console.log( 'starting vagrant demo' );
          var slides = {
 	     0:  "main interface",
@@ -763,6 +764,7 @@ end
 	    cuepoint.pause();
 	    cuepoint.init(slides,"storm-sub","storm-vid");
 	    cuepoint.setTime(0);
+	    document.getElementById('storm-vid').playbackRate = 3.0;
 	    cuepoint.play();
 	});
 
