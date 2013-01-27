@@ -27,14 +27,11 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
     <script src="js/cuepoint.js"></script>
+    <script src="js/keypress-1.0.1.js"></script>
     <!--[if lt IE 9]>
 		    <script src="lib/js/html5shiv.js"></script>
 		    <![endif]-->
 
-    <script>
-	$(document).ready(function(){ //Slides object with a time (integer) and a html string
-	    	});
-    </script>
   </head>
 
   <body>
@@ -69,7 +66,7 @@
 	    </aside>
 	  </section>
 
-	 	  <section id='Vagrant basics'>
+	 <section id='Vagrant basics'>
 	    <section>
 		<p>
 		  <h2>va·grant </h2>
@@ -82,6 +79,8 @@
 		  <source src="Videos/vagrant-demo.ogv">
 		</video>
 		<div id="vagrant-sub" class='subtitles'></div>
+		<button onclick="speedup('vagrant-vid')">+</button>
+		<button onclick="speedown('vagrant-vid')">-</button>
 	    </section>
 
 	    <section>
@@ -128,25 +127,23 @@ end
 	    <div id="puppet-sub" class='subtitles'>Puppet integration</div>
 	  </section>
 
-
 	 </section>
 
-	  <section data-state='whity' id='opskeleton'>
-	    <section> 
+	  <section id='opskeleton'>
+	    <section data-state='whity'> 
 		<img src="images/opskeleton.png" alt="" style='box-shadow: 0 0 0 0;border:0;' />
 		<aside class="notes"> Our Opskeleton demo</aside>
-		<h3> An opinionated sandbox bootstrap tool </h3>
+		<h3>An opinionated sandbox bootstraping tool </h3>
 	    </section>
 
 
 	    <section>
-	      <h3> Problem statement</h3>
+	      <h3>Aims to solve</h3>
 		<ul>
-		  <li>A system is more than its Puppet modules</li>
-		  <li>Most Puppet developers work directly on master</li>
-		  <li>Not clear what goes where (no clear standard)</li>
-		  <li>Hard to distribute complex environments</li>
-		  <li>Existing tools aren't used or used wrong</li>
+		  <li>It works on my master</li>
+		  <li>Yet another hidden forked version of puppet/commons</li>
+		  <li>5 hours wasted on this, it works only on Centos 5 :(</li>
+		  <li>Just follow this README and it will all work out!</li>
 		</ul>
 	    </section>
 
@@ -156,37 +153,29 @@ end
 
 
 	    <section>
-		<h3> Key goals </h3>
+		<h3>Key goals</h3>
 		<ul>
 		  <li><b>Development</b> workflow</li>
 		  <li>Dependency management</li>
 		  <li>Best practices</li>
 		  <li>Reproducibility and standardization </li>
-		  <li>Evolutionary application</li>
 		  <li>Code data segregation</li>
+		  <li>Integrate existing tools</li>
 		</ul>
 	    </section>
 
+	    <section> <img src="images/opsk-structure.png" style='border:none;background:black;' alt="" /></section>
 
 	   <section> 
-	     <h3>Opsk generates sandboxes</h3>
+	     <h3>Opsk Sandboxes</h3>
 	     <ul>
-		 <li>Virtualized enviroment</li>
+		 <li>Virtualized</li>
 		 <li>Provisioned</li>
-		 <li>Iterative development</li>
+		 <li>Iterative</li>
+		 <li>Distributable</li>
 		 <li>Easy to setup and teardown</li>
 	     </ul>
 	   </section>
-
-	    <section> 
-		<h3>Benefits</h3>
-		<ul>
-		  <li>Portable (Cloud agnostic)</li>
-		  <li>Easy to fork/distribute</li>
-		  <li>Open for experimentation (speed and isolation wise)</li>
-		  <li>Reproducible</li>
-		</ul>
-	    </section>
 
 	    <section class='cuepoint' data-state='opsk-demo'> 
 		<video id="opsk-vid" width="768" preload="auto" controls="" poster="">
@@ -297,12 +286,8 @@ puppet apply --modulepath=modules:static-modules \
 	    </section>
 
 	    <section>
-		<h3> Module life cycle</h3>
-		<ul>
-		  <li> Developed modules go under static-modules</li>
-		  <li> Once they get mature they get thier own repo</li>
-		  <li> Imported back into modules</li>
-		</ul>
+		<h3>Module life cycle</h3>
+		<img src="images/module-lifecycle.png" style='border:none;background:black;' alt="" />
 	    </section>
 	   
 	  </section>
@@ -699,108 +684,6 @@ end
     <script src="lib/js/head.min.js"></script>
     <script src="js/reveal.min.js"></script>
     <script src="js/conf.js"></script>
-    <script type="text/javascript"> 
-      Reveal.addEventListener( 'vagrant-demo', function() {
-
-	   console.log( 'starting vagrant demo' );
-         var slides = {
-	     0:  "main interface",
-	     18: "boxes and local storage",
-	     61:  "booting up",
-	     142: "logging into",
-	     157: "shared folder",
-	     177: "halting and destroying",
-	    }
-	    cuepoint.pause();
-	    cuepoint.init(slides,"vagrant-sub","vagrant-vid");
-	    cuepoint.setTime(0);
-	    cuepoint.play();
-	});
-
-      Reveal.addEventListener( 'puppet-demo', function() {
-	   console.log( 'starting puppet demo' );
-         var slides = {
-	     2:  "Checking current status",
-	     15: "Adding Puppet configuration",
-	     28: "Adding a package",
-	     47: "Run during reload",
-	     120: "Adding from within",
-	     142: "Local run"
-	    }
-	    cuepoint.pause();
-	    cuepoint.init(slides,"puppet-sub","puppet-vid");
-	    cuepoint.setTime(0);
-	    cuepoint.play();
-	});
-
-	Reveal.addEventListener( 'opsk-demo', function() {
-	   console.log( 'starting opsk demo' );
-         var slides = {
-	     8: "We start by generating a new project",
-	     17: "All the files are created within a new git repo",
- 	     27: "Bundler done installing gems ",
-	     32: "Using librarian to install modules",
-	     53: "Booting up the VM",
-	     125: "Hostname is set",
-	     132: "Adding a package", 
-	     157: "Using run.sh from /vagrant"
-	    }
-	    cuepoint.pause();
-	    cuepoint.init(slides,"opsk-sub","opsk-vid");
-	    cuepoint.setTime(0);
-	    cuepoint.play();
-	});
-
-	Reveal.addEventListener( 'storm-demo', function() {
-	   console.log( 'starting storm demo' );
-         var slides = {
-	     2:   "cooking debs",
-	     95:  "booting up",
-	     142: "nimbus is up", 
-	     194: "super_a is up", 
-	     249: "super_b is up", 
-	     252: "nimbus ui shows two supervisors"
-	    }
-	    cuepoint.pause();
-	    cuepoint.init(slides,"storm-sub","storm-vid");
-	    cuepoint.setTime(0);
-	    document.getElementById('storm-vid').playbackRate = 3.0;
-	    cuepoint.play();
-	});
-
-	Reveal.addEventListener( 'packaging-demo', function() {
-	   console.log( 'starting packaging demo' );
-         var slides = {
-	     2:  "current status",
-	     15:  "cooking in first sandbox",
-	     32:  "copying package to /vagrant/local-repo",
-	     65: "installing rpm on puppetizied machine"
-	    }
-	    cuepoint.pause();
-	    cuepoint.init(slides,"packaging-sub","packaging-vid");
-	    cuepoint.setTime(0);
-	    cuepoint.play();
-	});
-
-	Reveal.addEventListener( 'vagrantdns-demo', function() {
-	   console.log( 'starting vagrant dns demo' );
-         var slides = {
-	     2:  "initial state",
-	     10: "local dns server",
-	     27: "booting sandboxes",
-	     63: "registration",
-	     75: "host ping",
-	     95: "sandbox ping"
-	    }
-	    cuepoint.pause();
-	    cuepoint.init(slides,"vagrantdns-sub","vagrantdns-vid");
-	    cuepoint.setTime(0);
-	    cuepoint.play();
-	});
-
-
-
-    </script>
-
+    <script src="js/demo-cuepoints.js"></script>
   </body>
 </html>

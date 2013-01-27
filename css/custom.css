@@ -1,5 +1,5 @@
 .whity .reveal .state-background {
-	background: white;
+  background: white;
 }
 
 .whity .reveal {
@@ -19,13 +19,15 @@
 video {
   width: 768px;
   margin: 0 auto 10px auto;
-background: #555; }
+  background: #555; 
+}
 
 #intro {
   min-height: 120px;
   opacity: 8;
   padding:20px 0 20px 0;
-clear: both; }
+  clear: both; 
+}
 #intro h1, #intro h2, #use h2 {
   color: #FFF;
 font-family: 'Georgia'; }
@@ -61,8 +63,8 @@ margin-right: 0; }
 
 .subtitles{
   position:absolute;
-  top:50%; 
-  width:100%;background:url(../images/subtitle.png) 
+  top:-5%; 
+  width:90%;background:url(../images/subtitle.png) 
   repeat;opacity:1;
   height:40px;
   color:#FFF;
