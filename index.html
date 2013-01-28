@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Vagrant sketching board</title>
+
+    <meta name="description" content="Using Vagrant as your devops sketching board">
+    <meta name="author" content="Ronen Narkis">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/night.css" id="theme">
+    <link rel="stylesheet" href="css/effects.css">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/highlight_js/src/styles/github.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+	document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+    <script src="js/cuepoint.js"></script>
+    <script src="js/keypress-1.0.1.js"></script>
+    <!--[if lt IE 9]>
+		    <script src="lib/js/html5shiv.js"></script>
+		    <![endif]-->
+
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+	<!-- Any section element inside of this container is displayed as a slide -->
+	<div class="slides">
+
+	  <section>
+	    <h2>Vagrant sketching board</h1>
+	    <h5>Playing in the sandbox</h4>
+	    <p>
+		<small>Created by <a href="narkisr.com">Ronen Narkis</a> / <a href="http://twitter.com/narkisr">@narkisr</a></small>
+	    </p>
+	  </section>
+
+	  <section>
+	    <h2>Vagrant</h2>
+	    <p>
+		<ul>
+		  <li>Introduction</li>
+		  <li>Basic workflow</li>
+		  <li>Opskeleton</li>
+		  <li>Some (Advanced) use cases</li>
+		  <li>Extending</li>
+		</ul>
+	    </p>
+
+	    <aside class="notes">
+		Today will be talking on Vagrant, not just as tool but as an approach for developing your devop infra
+	    </aside>
+	  </section>
+
+	 <section id='Vagrant basics'>
+	    <section>
+		<p>
+		  <h2>va·grant </h2>
+		  " A person without a settled home or regular work who wanders from place to place and lives by begging."
+		</p>
+	    </section>
+
+          <section class='cuepoint' data-state='vagrant-demo'> 
+		<video id="vagrant-vid" width="768" preload="auto" controls="" poster="">
+		  <source src="Videos/vagrant-demo.ogv">
+		</video>
+		<div id="vagrant-sub" class='subtitles'></div>
+	    </section>
+
+	    <section>
+		<h4> Vagrantfile </h4>
+		<pre><code class='ruby'> 
+Vagrant::Config.run do |config|
+
+  config.vm.define :foo do |foo|
+    foo.vm.box = 'ubuntu-12.10'
+    foo.vm.network :bridged
+    foo.vm.customize ['modifyvm', :id, '--memory', 2048, '--cpus', 4]
+    foo.vm.host_name = 'foo'
+  end
+
+end 
+		</code></pre>
+		<aside class="notes"> 
+		  No point in using Vagrant init as it creates a pile of garbage, 
+		</aside>
+	    </section>
+        <section>
+          <h4> Puppet integration </h4>               	
+		<pre><code class='ruby'> 
+Vagrant::Config.run do |config|
+
+  config.vm.define :foo do |foo|
+    foo.vm.box = 'ubuntu-12.10'
+    foo.vm.network :bridged
+    foo.vm.customize ['modifyvm', :id, '--memory', 2048, '--cpus', 4]
+    foo.vm.host_name = 'foo'
+    foo.vm.provision :puppet, 
+       :options => ["--modulepath=/vagrant/modules:/vagrant/static-modules"]
+  end
+
+end 
+		</code></pre>
+          <aside class='notes'>puppet development workflow, side by side run and edit</aside>	
+        </section>
+ 
+	  <section>
+	    <h3>Shared folder editing</h3>
+	    <img src="images/puppet-shared.png" alt="" style='border:none;background:black;'  />
+	  </section>
+	  
+        <section class='cuepoint' data-state='puppet-demo'> 
+	     <video id="puppet-vid" width="768" preload="auto" controls="" poster="">
+		  <source src="Videos/puppet-demo.ogv">
+	    </video>
+	    <div id="puppet-sub" class='subtitles'>Puppet integration</div>
+	  </section>
+
+	 </section>
+
+	  <section id='opskeleton'>
+	    <section data-state='whity'> 
+		<img src="images/opskeleton.png" alt="" style='box-shadow: 0 0 0 0;border:0;' />
+		<aside class="notes"> Our Opskeleton demo</aside>
+		<h3>An opinionated sandbox bootstraping tool </h3>
+	    </section>
+
+
+	    <section>
+	      <h3>Aims to solve</h3>
+		<ul>
+		  <li>It works on my master</li>
+		  <li>Implicit/Missing dependencies</li>
+		  <li>Manual steps</li>
+		  <li>Non standard layout</li>
+		  <li>No clear development guidelines</li>
+		</ul>
+	    </section>
+
+         <section>
+	      <img src="images/cat-sandbox.jpg" width='50%' hight='50%'  alt="" />
+	   </section>
+
+
+	    <section>
+		<h3>Key goals</h3>
+		<ul>
+		  <li><b>Development</b> workflow</li>
+		  <li>Dependency management</li>
+		  <li>Best practices</li>
+		  <li>Reproducibility and standardization </li>
+		  <li>Code data segregation</li>
+		  <li>Integrate existing tools</li>
+		</ul>
+	    </section>
+
+	    <section> <img src="images/opsk-structure.png" style='border:none;background:black;' alt="" /></section>
+
+	   <section> 
+	     <h3>Opsk Sandboxes</h3>
+	     <ul>
+		 <li>Virtualized</li>
+		 <li>Provisioned</li>
+		 <li>Iterative</li>
+		 <li>Distributable</li>
+		 <li>Easy to setup and teardown</li>
+	     </ul>
+	   </section>
+
+	    <section class='cuepoint' data-state='opsk-demo'> 
+		<video id="opsk-vid" width="768" preload="auto" controls="" poster="">
+		  <source src="Videos/opsk.ogv">
+		</video>
+		<div id="opsk-sub" class='subtitles'>Opsk demo</div>
+	    </section>
+
+
+	    <section> 
+	     <h3> Dependencies </h3>
+	     <p>
+	      <ul>
+	        <li>OS version (Vagrantfile)</li>
+	        <li>Ruby version </li>
+		  <li>Gems (Puppet, Vagrant ..)</li>
+	        <li>External Puppet modules</li>
+	      </ul> 
+	     </p> 
+	    </section>
+
+	    <section>
+		<h3> Librarian Puppet</h3>
+<pre><code class="ruby"># Puppetfile, modules installed to modules dir
+forge "http://forge.puppetlabs.com"
+
+mod 'puppetlabs/stdlib'
+
+mod 'puppetlabs/apt'
+
+mod 'editfile',
+   :git => 'git://github.com/mstrauss/puppet-editfile.git' 
+	     	</code></pre>
+	    </section>
+
+	    <section>
+	      <h3> RVM </h3>
+<pre><code class="bash"> # .rvmrc
+ruby_string="ruby-1.9.3"
+gemset_name="foo-sandbox"
+
+if rvm list strings | grep -q "${ruby_string}" ; then
+  # Load or create the specified environment
+  if [[ -d "${rvm_path:-$HOME/.rvm}/environments" \
+        ...
+  else
+    rvm --create  "${ruby_string}@${gemset_name}"
+  fi
+  ( # Ensure that Bundler is installed, install it if it is not.
+    if ! command -v bundle ; then
+      gem install bundler
+    fi
+
+    # Bundle while redcing excess noise.
+    bundle | grep -v 'Using' | grep -v 'complete' | sed '/^$/d'
+  )&
+  else 
+   ...  </code></pre>
+          <aside class="notes">
+		Here we see the ruby version and the sandbox gemset (separation of dependencies between sandxboes)
+	      Bundle is automatically installed and bundle install is executed in the background
+	    </aside>
+	    </section>
+
+	    <section>
+	      <h3> Bundler </h3>
+	      <pre><code class="ruby">
+# Gemfile
+
+# opskelaton Gems
+source "https://rubygems.org"
+
+gem 'vagrant', '>=1.0.5'
+gem 'puppet'
+gem 'puppet-lint'
+gem 'librarian-puppet'
+gem 'rake'
+		</code></pre>
+	    </section>
+	    <section>
+	      <h3> Hiera </h3>
+<pre><code class="ruby"># hiera.yaml
+:backends:
+ - yaml
+:logger: console
+:hierarchy:
+ - '%{::virtual}'
+ - common
+:yaml:
+   :datadir: hieradata
+		</code></pre>
+<pre><code class="ruby"># hieradata/physical.yaml
+---
+user: "ronen"
+</code></pre>
+<pre><code class="ruby"># hieradata/virtualbox.yaml
+--- 
+user: "vagrant"
+</code></pre>
+	    </section>
+
+	    <section> 
+	     <h3>Easy execution</h3>
+<pre><code class="bash"># run.sh
+puppet apply --modulepath=modules:static-modules \
+       manifests/default.pp --hiera_config hiera.yaml  $@
+	     </code></pre> 
+	    </section>
+
+	    <section>
+		<h3>Module life cycle</h3>
+		<img src="images/module-lifecycle.png" style='border:none;background:black;' alt="" />
+	    </section>
+	   
+	  </section>
+   
+	  <section id='use-cases'>
+	    <section><h1> Use cases</h1></section>
+
+	    <section> 
+		<h2>puppet-base-env</h2>
+		<p>sandboxed environment management  </p>
+	    </section>
+
+	    <section>
+<pre><code class="ruby"># manifests/default.pp
+include git
+include shell
+include baseline
+include langs
+include vim
+include build
+
+class {'desktop':
+  home     => $home,
+  username => $username
+}</code></pre>
+	    </section>
+
+          <section>
+<pre><code class="ruby"># A class which sets up programming languages
+class langs {
+  include langs::build_essential
+  include langs::ruby
+  include langs::coffeescript
+  include langs::jdk
+}
+            </code></pre>
+          </section>
+
+          <section>
+		<h3> Virtualbox vs Physical</h3>
+<pre><code class="ruby"># hiera.yaml
+---
+:backends:
+ - yaml
+:logger: console
+:hierarchy: 
+ - '%{::virtual}'
+ - common
+:yaml:
+   :datadir: hieradata
+		</code></pre>
+<pre><code class="ruby"># hieradata/physical.yaml
+---
+user: "ronen"
+home: "/home/ronen"
+scm_user: "narkisr"
+scm_email: "narkisr@gmail.com"		
+</code></pre>
+<pre><code class="ruby"># hieradata/virtualbox.yaml
+--- 
+user: "vagrant"
+home: "/home/vagrant"
+scm_user: "vagrant"
+scm_email: "vagrant@gmail.com"
+</code></pre>
+          </section>
+
+	    <section>
+	      <h2> Clustered environments</h2>
+	    </section>
+
+	    <section> 
+		<h3> Storm </h3>
+            <img src="images/storm-topology.png" style='border:none;background:black;' alt="" /> 
+	    </section>
+
+	    <section>
+<pre><code class="ruby"> # Management machine 
+  config.vm.define :nimbus do |nimbus|
+    # ...
+    nimbus.vm.host_name = 'nimbus'
+    nimbus.vm.network :hostonly, "192.168.1.10"
+  end
+
+  # worker machines
+  config.vm.define :super_a do |supervisor|
+    # ...
+    supervisor.vm.host_name = 'supervisor-a'
+    supervisor.vm.network :hostonly, "192.168.1.11"
+  end
+ 
+  config.vm.define :super_b do |supervisor|
+    # ...
+    supervisor.vm.host_name = 'supervisor-b'
+    supervisor.vm.network :hostonly, "192.168.1.12"
+  end
+		</code></pre>
+	    </section>
+          <section>
+            <pre><code class="ruby">
+# default.pp
+node 'nimbus'{
+  include storm::nimbus
+}
+
+node 'supervisor-a'{
+  include storm::supervisor
+}
+
+node 'supervisor-b'{
+  include storm::supervisor
+}	     
+		</code></pre>
+          </section>
+	    
+	    <section>
+<pre><code class="ruby">class storm {
+  package{ 'zeromq':
+    ensure   => installed,
+    provider => dpkg,
+    source   => '/vagrant/fpm-recipes/zeromq/pkg/zeromq_2.1.7+fpm0_amd64.deb',
+  }
+
+  package{ 'jzmq':
+    ensure   => installed,
+    provider => dpkg,
+    source   => '/vagrant/fpm-recipes/jzmq/pkg/jzmq_1.0.0+fpm0_amd64.deb',
+    require  => Package['zeromq']
+  }
+
+  package { 'storm':
+    ensure   => installed,
+    provider => dpkg,
+    source   => '/vagrant/fpm-recipes/storm/pkg/storm_0.8.1+fpm0_all.deb',
+    require  => Package['openjdk-6-jdk','zeromq','jzmq','unzip']
+  } 
+#...
+</code></pre>
+	    </section>
+
+	    <section> <h2> Packaging storm </h2></section>
+
+	    <section>
+		<h3> Fpm </h3>
+	      <pre><code class="bash">
+# note how maunual this is
+$ wget http://ftp.osuosl.org/pub/hudson/war/1.396/jenkins.war
+
+# using flags to set package type name version etc..
+$ fpm -s dir -t deb -n jenkins -v 1.396 --prefix /opt/jenkins jenkins.war
+
+		</code></pre>
+		<aside class="notes"> FPM is a really nice too but it relies upon the use of flags, it does not specify any DSL or structure</aside>
+	    </section>
+
+          <section>
+            <h3> FPM Cookery</h3>
+<pre><code class="ruby">class ZeroMQ < FPM::Cookery::Recipe
+  description 'The Intelligent Transport Layer'
+
+  name     'zeromq'
+  version  '2.1.7'
+  homepage 'http://www.zeromq.org'
+  source   'http://download.zeromq.org/zeromq-2.1.7.tar.gz'
+  sha256   '2a1416d0a3ea55ae17d43417fd9bd193412cc9101e144bc8d3bd19fe36816e0d'
+
+  def build
+    # configure and make are build in 
+    configure :prefix => prefix
+    make
+  end
+
+  def install
+    # prefix is #{cwd}/tmp-dest
+    make :install, 'DESTDIR' => destdir
+  end
+end
+		</code></pre>
+          </section>
+
+	    <section class='cuepoint' data-state='storm-demo'>
+	  	<video id="storm-vid" width="768" preload="auto" controls="" poster="">
+		  <source src="Videos/storm-demo.ogv">
+		</video>
+		<div id="storm-sub" class='subtitles'></div>
+	    </section>
+
+	    <section>
+	      <h3>Packaging and Provisioning</h3>
+		<img src="images/packaging.png" style='box-shadow: 0 0 0 0;border:0;background:black;' alt="" />
+		<aside class="notes"> 
+	       Wede like to build rpms that have complex native dependencies, the packaging vm holds these deps, 
+             Note that we don't want to pollute our host machine with these so sandboxing is a win
+		</aside>
+	    </section>
+
+	     <section class='cuepoint' data-state='packaging-demo'>
+	  	<video id="packaging-vid" width="768" preload="auto" controls="" poster="">
+		  <source src="Videos/packaging-demo.ogv">
+		</video>
+		<div id="packaging-sub" class='subtitles'></div>
+	    </section>
+
+	  </section>
+
+	  <section> 
+	    <section>
+	      <h2> Extending Vagrant </h2>
+	    </section> 
+
+	    <section>
+		<h3>Host lookup nightmare</h3>
+<pre><code class="ruby">    master.vm.host_name = 'jenkins-master'
+    master.vm.network :hostonly, "192.168.1.10"
+
+    # ...
+    slave.vm.host_name = 'jenkins-slave'
+    slave.vm.network :hostonly, "192.168.1.11"
+
+    # ...
+    artifactory.vm.host_name = 'artifactory'
+    artifactory.vm.network :hostonly, "192.168.1.12"
+
+    # ...
+    gitolite.vm.host_name = 'gitolite'
+    gitolite.vm.network :hostonly, "192.168.1.13"
+</code></pre>
+		<aside class="notes"> host lookup while using multiple machines is hard, the solution is Vagrant dns server</aside>
+	    </section>
+
+	    <section>
+	      <h2> Vagrant DNS server</h2>
+	    </section>
+
+	    <section><img src="images/vagrant-dns-server.png" style='border:none;background:black;' alt="" /></section>
+
+          <section class='cuepoint' data-state='vagrantdns-demo'> 
+		<video id="vagrantdns-vid" width="768" preload="auto" controls="" poster="">
+		  <source src="Videos/vagrant-dns-demo.ogv">
+		</video>
+		<div id="vagrantdns-sub" class='subtitles'></div>
+	    </section>
+
+          <section>
+		<h3> Usage </h3>
+<pre><code class="ruby"># opskelaton Gems
+source "https://rubygems.org"
+
+gem 'vagrant', '>=1.0.5'
+gem 'puppet'
+gem 'puppet-lint'
+gem 'librarian-puppet'
+gem 'rake'
+# in order to use we add the gem
+gem 'vagrant-dns-server' 
+		</code></pre>
+          </section>
+
+	    <section>
+	      <h2> Implementation </h2>
+	    </section>
+
+	  <section>
+	    <h3> Registration </h3>
+	    <pre><code class="ruby">
+Vagrant.actions[:provision].insert_after(Vagrant::Action::VM::Provision, Update) 
+
+Vagrant.actions[:start].insert_after(Vagrant::Action::VM::Boot, Update) 
+
+Vagrant.actions[:destroy].insert_after(Vagrant::Action::VM::ProvisionerCleanup, Remove)  
+	    </code></pre>
+	  </section>
+
+	  <section>
+<pre><code class="ruby"># lib/vagrant/action/builtin.rb
+module Vagrant
+  module Action
+    class Builtin < Registry
+      # ...
+       register(:start) do
+          Builder.new do
+            # ...
+            use VM::CleanMachineFolder
+            use VM::ClearForwardedPorts
+            use VM::CheckPortCollisions, :port_collision_handler => :correct
+            use VM::ForwardPorts
+            use VM::Provision # <= Update will happen here
+            # ...
+          end
+        end
+    end 
+  end
+end
+</code></pre>
+	  </section>
+
+	   <section> 
+		<h3> Middleware </h3>
+	    <pre><code class="ruby"> 
+class Update
+  def initialize(app, env)
+    @app = app
+  end
+
+  def call(env)
+    @app.call(env)
+    update env[:vm] if env["vm"].state == :running
+  end
+
+  protected
+  def update(vm)
+    VagrantDns::NetworkBinder.new.bind(vm)
+  end
+end
+	    </code></pre>	
+	      
+	    </section>
+
+	  <section>
+	    <h3> Accessing VM properties </h3>
+<pre><code class="ruby"> 
+class NetworkBinder          
+ def bind(vm)
+  (host,ip) = host_ip(vm)
+  Status.new.report(host,ip,:up)  
+ end                        
+ # ...  
+ private 
+ def host_ip(vm)            
+   networks = vm.config.vm.networks.find_all do |type,network_parameters|
+     type == :hostonly      
+   end                      
+   ips = networks.map {|type,params| params.first}
+   host = vm.config.vm.host_name   
+   [host,ips.first]         
+ end
+end
+
+</code></pre>
+  </section>
+
+  <section>
+    <h3> UI and Zeromq</h3>
+   <pre><code class="ruby"> 
+UI = Vagrant::UI::Colored.new('dns') 
+class Status
+ def report(host,ip,status)
+  # publishing 
+  context = ZMQ::Context.new      
+  pub = context.socket(ZMQ::PUB)  
+  pub.connect(CONF.get('zmq_url'))
+
+  UI.say(:debug,"connection made")
+  res = pub.send("#{CHANNEL} #{host} #{ip} #{status.to_s}", ZMQ::NOBLOCK)
+
+  # notifying during boot
+  UI.say(:info,"notifying server with #{status} status") if res
+  UI.say(:info, "server not up, skipping notifying #{status} status") if not res
+
+  pub.close
+ end
+end
+</code></pre>
+	  </section>
+	  </section>
+
+	  <section> 
+	    <section>
+	      <h3> Summary </h3>
+		<ul>
+		  <li> Sandboxes are key to devop process</li>
+		  <li> Use opsk for create standard sandboxes</li>
+		  <li> Experiment extend and have fun! </li>
+		</ul>
+	    </section>
+
+	    <section>
+	      <h3> Me</h3>
+		<ul>
+		  <li> <a href="http://twitter.com/#!/narkisr/">@narkisr</a><br></li>
+		  <li> <a href="https://github.com/narkisr">github.com/narkisr</a> </li>
+		  <li> <a href="http://narkisr.com">narkisr.com</a></li>
+		  <li> <a href="http://il.linkedin.com/in/narkisr">il.linkedin.com/in/narkisr/</a> </li>
+		  <li> <a href="http://www.lambda.org.il/">lambda.org.il</a></li>
+		  <li> github.com/narkisr/vagrant-sketching-board</li>
+		</ul>
+	    </section>
+        </section>
+
+	</div>
+    </div>
+
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+    <script src="js/conf.js"></script>
+    <script src="js/demo-cuepoints.js"></script>
+    <script type="text/javascript"> 
+    keypress.combo("+", function() {
+	  speedup(curr_vid);
+    }); 
+    keypress.combo("shift _", function() {
+	  speedown(curr_vid);
+    }); 
+    </script>
+  </body>
+</html>

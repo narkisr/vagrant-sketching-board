@@ -1,0 +1,45 @@
+1
+00:00:03,478 --> 00:00:06,000
+Local host added to resolve.conf
+
+2
+00:00:07,045 --> 00:00:10,545
+No DNS port open 
+
+3
+00:00:10,045 --> 00:00:13,545
+Starting vagrant plugin dns server
+
+4
+00:00:16,045 --> 00:00:19,545
+Ports 53 (DNS) and 7005 (Zeromq) is open
+
+5
+00:00:27,045 --> 00:00:30,545
+Starting up first host machine
+
+6
+00:00:33,045 --> 00:00:36,545
+Starting up second host machine
+
+7
+00:01:05,045 --> 00:01:08,545
+Jenkins is up
+
+8
+00:01:09,045 --> 00:01:12,545
+Artifactory is up
+
+9
+00:01:15,045 --> 00:01:18,545
+Pinging from host machine
+
+9
+00:01:44,045 --> 00:01:47,545
+Pinging from within the VM 
+
+10
+00:02:02,045 --> 00:02:05,545
+VM resolves against host machine
+
+
