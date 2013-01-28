@@ -118,6 +118,11 @@ end
           <aside class='notes'>puppet development workflow, side by side run and edit</aside>	
         </section>
  
+	  <section>
+	    <h3>Shared folder editing</h3>
+	    <img src="images/puppet-shared.png" alt="" style='border:none;background:black;'  />
+	  </section>
+	  
         <section class='cuepoint' data-state='puppet-demo'> 
 	     <video id="puppet-vid" width="768" preload="auto" controls="" poster="">
 		  <source src="Videos/puppet-demo.ogv">
@@ -139,9 +144,10 @@ end
 	      <h3>Aims to solve</h3>
 		<ul>
 		  <li>It works on my master</li>
-		  <li>Yet another hidden forked version of puppet/commons</li>
-		  <li>5 hours wasted on this, it works only on Centos 5 :(</li>
-		  <li>Just follow this README and it will all work out!</li>
+		  <li>Implicit/Missing dependencies</li>
+		  <li>Manual steps</li>
+		  <li>Non standard layout</li>
+		  <li>No clear development guidelines</li>
 		</ul>
 	    </section>
 
@@ -503,15 +509,15 @@ end
 
     # ...
     slave.vm.host_name = 'jenkins-slave'
-    slave.vm.network :hostonly, "192.168.1.10"
+    slave.vm.network :hostonly, "192.168.1.11"
 
     # ...
     artifactory.vm.host_name = 'artifactory'
-    artifactory.vm.network :hostonly, "192.168.1.11"
+    artifactory.vm.network :hostonly, "192.168.1.12"
 
     # ...
     gitolite.vm.host_name = 'gitolite'
-    gitolite.vm.network :hostonly, "192.168.1.12"
+    gitolite.vm.network :hostonly, "192.168.1.13"
 </code></pre>
 		<aside class="notes"> host lookup while using multiple machines is hard, the solution is Vagrant dns server</aside>
 	    </section>
